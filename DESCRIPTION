@@ -1,0 +1,29 @@
+Package: mwbenchr
+Title: Metabolomics Workbench REST API Interface
+Version: 0.0.1
+Authors@R: 
+    person("Dany", "Mukesha", , "danymukesha@gmail.com", 
+            role = c("aut", "cre"),
+           comment = c(ORCID = "0009-0001-9514-751X"))
+Description: Provides a user-friendly interface to the Metabolomics Workbench REST API,
+    enabling programmatic access to metabolomics data from R. The package covers all
+    API endpoints including compound information, study metadata, RefMet standardization,
+    and mass spectrometry searches.
+License: MIT + file LICENSE
+Depends: R (>= 4.1.0)
+Imports:
+    httr2,
+    jsonlite,
+    tibble,
+    dplyr,
+    tidyr,
+    magrittr
+Suggests:
+    testthat (>= 3.0.0),
+    knitr,
+    rmarkdown,
+    BiocStyle,
+    covr
+VignetteBuilder: knitr
+biocViews: Metabolomics, WebService, DataImport
+RoxygenNote: 7.3.2

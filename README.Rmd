@@ -1,0 +1,58 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# mwbenchr
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+Our mission:
+
+- **To cover all REST API endpoints** provided by the Metabolomics Workbench.
+- **To ensure type safety** through strict validation of inputs and outputs.
+- **To deliver tidy outputs** as well-structured `data.frame`s ready for analysis.
+- **To support efficient workflows** with optional local caching of API responses.
+- **To respect API rate limits** with built-in request throttling and retry logic.
+- **To enhance user experience** with clear and informative API messages.
+
+Use-case:
+
+```{r}
+## ----setup, include=FALSE-----------------------------------------------------
+knitr::opts_chunk$set(echo = TRUE)
+
+## ----initialize---------------------------------------------------------------
+library(mwbenchr)
+client <- mw_rest_client()
+
+## ----compound-----------------------------------------------------------------
+# Get compound information by PubChem CID
+compound <- get_compound_by_pubchem_cid(client, 5281365)
+head(compound)
+
+## ----study--------------------------------------------------------------------
+# Get study summary
+study <- get_study_summary(client, "ST000001")
+head(study)
+
+## ----metstat------------------------------------------------------------------
+# Search for diabetes studies in human blood
+diabetes_studies <- search_metstat(
+  client,
+  species = "Human",
+  sample_source = "Blood",
+  disease = "Diabetes"
+)
+head(diabetes_studies)
+```
+
