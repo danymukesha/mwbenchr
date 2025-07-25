@@ -1,28 +1,72 @@
-#' Convert API response to data frame
+#' Flatten a single metabolite entry (with nested DATA field)
 #'
-#' @param response API response
-#' @return Data frame
+#' @param entry A list of metabolite metadata and nested sample data
+#' @return A single-row tibble
+#' @export
+flatten_entry <- function(entry) {
+    if (!is.list(entry) || is.null(entry$DATA)) {
+        stop("Entry must be a list with a $DATA element")
+    }
+
+    meta <- tibble::tibble(
+        study_id = entry$study_id,
+        analysis_id = entry$analysis_id,
+        analysis_summary = entry$analysis_summary,
+        metabolite_name = entry$metabolite_name,
+        metabolite_id = entry$metabolite_id,
+        refmet_name = entry$refmet_name,
+        units = entry$units
+    )
+
+    sample_data <- tibble::as_tibble(entry$DATA)
+    dplyr::bind_cols(meta, sample_data)
+}
+
+#' Convert mwbenchr API response into a clean data frame
+#'
+#' Handles responses like:
+#'
+#' - Flat named list (e.g. compound, study)
+#' - Named list of rows (e.g. search results from search_metstat)
+#' - List of metabolite entries (with nested DATA)
+#'
+#' @param response A parsed response from mwbenchr
+#' @return A tibble
 #' @export
 response_to_df <- function(response) {
     if (!is.list(response)) {
-        stop("Response must be a list (JSON parsed response)")
+        stop("Response must be a list (e.g., from JSON or mwbenchr API)")
     }
 
-    # we handle different response structures
-    if (all(c("data", "columns") %in% names(response))) {
-        # the espected study data response
-        df <- as.data.frame(do.call(rbind, response$data))
-        colnames(df) <- response$columns
-    } else if (is.null(names(response))) {
-        # obtained list of compounds
-        df <- do.call(rbind, lapply(response, as.data.frame))
-    } else {
-        # otherwise single item
-        df <- as.data.frame(response)
+    if (!is.null(names(response)) && all(grepl("^Row\\d+$", names(response)))) {
+        return(
+            purrr::map(response, tibble::as_tibble) |>
+                purrr::list_rbind(names_to = "row")
+        )
     }
 
-    df
+    if (all(purrr::map_lgl(response, ~ is.list(.x) && "DATA" %in% names(.x)))) {
+        return(
+            purrr::map(response, flatten_entry) |>
+                purrr::list_rbind()
+        )
+    }
+
+    if (!is.null(names(response)) && all(nzchar(names(response))) &&
+        !any(grepl("^\\d+$", names(response)))) {
+        return(tibble::as_tibble(response))
+    }
+
+    if (all(purrr::map_lgl(response, is.list))) {
+        return(
+            purrr::map(response, tibble::as_tibble) |>
+                purrr::list_rbind()
+        )
+    }
+
+    tibble::as_tibble(response)
 }
+
 
 #' Print available endpoints
 #'

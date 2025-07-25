@@ -2,16 +2,21 @@
 % Please edit documentation in R/utils.R
 \name{response_to_df}
 \alias{response_to_df}
-\title{Convert API response to data frame}
+\title{Convert mwbenchr API response into a clean data frame}
 \usage{
 response_to_df(response)
 }
 \arguments{
-\item{response}{API response}
+\item{response}{A parsed response from mwbenchr}
 }
 \value{
-Data frame
+A tibble
 }
 \description{
-Convert API response to data frame
+Handles responses like:
+}
+\details{
+- Flat named list (e.g. compound, study)
+- Named list of rows (e.g. search results from search_metstat)
+- List of metabolite entries (with nested DATA)
 }

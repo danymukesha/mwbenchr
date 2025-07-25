@@ -42,7 +42,7 @@ mw_request <- function(client, endpoint, parse = TRUE, format = "json", ...) {
 
     req <- httr2::request(url) |>
         httr2::req_timeout(client$timeout) |>
-        httr2::req_user_agent("mwREST R package (https://github.com/yourusername/mwREST)")
+        httr2::req_user_agent("mwbenchr R package (https://github.com/danymukesha/mwbenchr)")
 
     if (client$cache) {
         req <- req |>
