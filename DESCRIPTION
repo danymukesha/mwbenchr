@@ -23,7 +23,8 @@ Suggests:
     knitr,
     rmarkdown,
     BiocStyle,
-    covr
+    covr,
+    learnr
 VignetteBuilder: knitr
 biocViews: Metabolomics, WebService, DataImport
 RoxygenNote: 7.3.2

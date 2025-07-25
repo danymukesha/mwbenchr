@@ -1,0 +1,54 @@
+---
+title: "introduction"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{introduction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r library}
+library(mwbenchr)
+```
+
+```{r initialize_client}
+client <- mw_rest_client()
+```
+
+```{r get_compound_client}
+compound <- get_compound_by_pubchem_cid(client, 5281365)
+print(compound)
+```
+
+```{r get_study_data}
+study_data <- get_study_data(client, "ST000001")
+study_df <- response_to_df(study_data)
+head(study_df)
+```
+
+```{r search_compounds_by_mass, include=FALSE, eval=FALSE}
+mass_results <- search_by_mass(client, "MB", 255.2, "M+H", 0.2)
+mass_df <- response_to_df(mass_results)
+head(mass_df)
+```
+
+```{r search_studies_related_to_diabetes_in_human_blood}
+diabetes_studies <- search_metstat(
+  client,
+  species = "Human",
+  sample_source = "Blood",
+  disease = "Diabetes"
+)
+```
+
+```{r convert_to_data_frame_and_view}
+diabetes_df <- response_to_df(diabetes_studies)
+head(diabetes_df)
+```
