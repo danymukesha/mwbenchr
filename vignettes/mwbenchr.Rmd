@@ -306,7 +306,7 @@ data_matrix <- get_study_data(client, target_study)
 
 # 4. Basic data exploration
 cat("Study:", study_info$study_title, "\n")
-cat("Number of samples:", ncol(data_matrix) - 7, "\n") # Subtract metadata columns
+cat("Number of samples:", ncol(data_matrix) - 7, "\n") # Subs. metadata columns
 cat("Number of metabolites:", nrow(data_matrix), "\n")
 
 # 5. Data processing
@@ -319,7 +319,8 @@ metabolite_stats <- data_matrix %>%
   select(metabolite_name, refmet_name) %>%
   bind_cols(
     mean_intensity = rowMeans(numeric_data, na.rm = TRUE),
-    cv = apply(numeric_data, 1, function(x) sd(x, na.rm = TRUE) / mean(x, na.rm = TRUE))
+    cv = apply(numeric_data, 1, function(x) 
+        sd(x, na.rm = TRUE) / mean(x, na.rm = TRUE))
   )
 
 head(metabolite_stats)
@@ -463,7 +464,8 @@ safe_api_call <- function(func, ..., max_attempts = 3) {
       },
       error = function(e) {
         if (attempt == max_attempts) {
-          stop("API call failed after ", max_attempts, " attempts: ", e$message)
+          stop("API call failed after ", max_attempts, " attempts: ", 
+               e$message)
         }
         message("Attempt ", attempt, " failed, retrying...")
         Sys.sleep(1)
