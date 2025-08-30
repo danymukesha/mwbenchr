@@ -22,9 +22,7 @@
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/introduction.html">Hands-On mwbenchr</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
-      </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
- <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/danymukesha/mwbenchr/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+      </ul><ul class="navbar-nav"><li class="nav-item"><a class="external-link nav-link" href="https://github.com/danymukesha/mwbenchr" aria-label="GitHub repository"><span class="fa fa-github"></span></a></li>
       </ul></div>
 
 
@@ -36,7 +34,7 @@
     </div>
 
     <div class="section level2">
-      <h2 id="all-functions">All functions<a class="anchor" aria-label="anchor" href="#all-functions"></a></h2>
+      <h2 id="client-setup">Client Setup<a class="anchor" aria-label="anchor" href="#client-setup"></a></h2>
 
 
 
@@ -48,58 +46,27 @@
 
       <dl><dt>
 
-          <code><a href="calculate_exact_mass.html">calculate_exact_mass()</a></code>
+          <code><a href="mw_rest_client.html">mw_rest_client()</a></code>
 
         </dt>
-        <dd>Calculate exact mass for lipid</dd>
-      </dl><dl><dt>
+        <dd>Initialize Metabolomics Workbench REST client</dd>
+      </dl></div><div class="section level2">
+      <h2 id="study-data">Study Data<a class="anchor" aria-label="anchor" href="#study-data"></a></h2>
 
-          <code><a href="download_compound_structure.html">download_compound_structure()</a></code>
 
-        </dt>
-        <dd>Download compound structure file</dd>
-      </dl><dl><dt>
 
-          <code><a href="flatten_entry.html">flatten_entry()</a></code>
 
-        </dt>
-        <dd>Flatten a metabolite entry with nested sample data</dd>
-      </dl><dl><dt>
+    </div><div class="section level2">
 
-          <code><a href="get_all_refmet_names.html">get_all_refmet_names()</a></code>
 
-        </dt>
-        <dd>Get all RefMet names</dd>
-      </dl><dl><dt>
 
-          <code><a href="get_compound_by_pubchem_cid.html">get_compound_by_pubchem_cid()</a></code>
+
+      <dl><dt>
+
+          <code><a href="get_study_summary.html">get_study_summary()</a></code>
 
         </dt>
-        <dd>Get compound information by PubChem CID</dd>
-      </dl><dl><dt>
-
-          <code><a href="get_compound_by_regno.html">get_compound_by_regno()</a></code>
-
-        </dt>
-        <dd>Get compound information by registry number</dd>
-      </dl><dl><dt>
-
-          <code><a href="get_compound_classification.html">get_compound_classification()</a></code>
-
-        </dt>
-        <dd>Get compound classification hierarchy</dd>
-      </dl><dl><dt>
-
-          <code><a href="get_refmet_by_name.html">get_refmet_by_name()</a></code>
-
-        </dt>
-        <dd>Get RefMet information by name</dd>
-      </dl><dl><dt>
-
-          <code><a href="get_study_data.html">get_study_data()</a></code>
-
-        </dt>
-        <dd>Get study data matrix</dd>
+        <dd>Get study summary information</dd>
       </dl><dl><dt>
 
           <code><a href="get_study_factors.html">get_study_factors()</a></code>
@@ -114,10 +81,125 @@
         <dd>Get study metabolite list</dd>
       </dl><dl><dt>
 
-          <code><a href="get_study_summary.html">get_study_summary()</a></code>
+          <code><a href="get_study_data.html">get_study_data()</a></code>
 
         </dt>
-        <dd>Get study summary information</dd>
+        <dd>Get study data matrix</dd>
+      </dl></div><div class="section level2">
+      <h2 id="compound-information">Compound Information<a class="anchor" aria-label="anchor" href="#compound-information"></a></h2>
+
+
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="get_compound_by_regno.html">get_compound_by_regno()</a></code>
+
+        </dt>
+        <dd>Get compound information by registry number</dd>
+      </dl><dl><dt>
+
+          <code><a href="get_compound_by_pubchem_cid.html">get_compound_by_pubchem_cid()</a></code>
+
+        </dt>
+        <dd>Get compound information by PubChem CID</dd>
+      </dl><dl><dt>
+
+          <code><a href="get_compound_classification.html">get_compound_classification()</a></code>
+
+        </dt>
+        <dd>Get compound classification hierarchy</dd>
+      </dl></div><div class="section level2">
+      <h2 id="refmet-integration">RefMet Integration<a class="anchor" aria-label="anchor" href="#refmet-integration"></a></h2>
+
+
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="get_refmet_by_name.html">get_refmet_by_name()</a></code>
+
+        </dt>
+        <dd>Get RefMet information by name</dd>
+      </dl><dl><dt>
+
+          <code><a href="standardize_to_refmet.html">standardize_to_refmet()</a></code>
+
+        </dt>
+        <dd>Standardize metabolite name to RefMet</dd>
+      </dl><dl><dt>
+
+          <code><a href="get_all_refmet_names.html">get_all_refmet_names()</a></code>
+
+        </dt>
+        <dd>Get all RefMet names</dd>
+      </dl></div><div class="section level2">
+      <h2 id="mass-spectrometry">Mass Spectrometry<a class="anchor" aria-label="anchor" href="#mass-spectrometry"></a></h2>
+
+
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="search_by_mass.html">search_by_mass()</a></code>
+
+        </dt>
+        <dd>Search compounds by mass</dd>
+      </dl><dl><dt>
+
+          <code><a href="calculate_exact_mass.html">calculate_exact_mass()</a></code>
+
+        </dt>
+        <dd>Calculate exact mass for lipid</dd>
+      </dl></div><div class="section level2">
+      <h2 id="search">Search<a class="anchor" aria-label="anchor" href="#search"></a></h2>
+
+
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="search_metstat.html">search_metstat()</a></code>
+
+        </dt>
+        <dd>Search studies using MetStat criteria</dd>
+      </dl></div><div class="section level2">
+      <h2 id="utilities">Utilities<a class="anchor" aria-label="anchor" href="#utilities"></a></h2>
+
+
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="response_to_df.html">response_to_df()</a></code>
+
+        </dt>
+        <dd>Convert Response to Data Frame</dd>
       </dl><dl><dt>
 
           <code><a href="list_endpoints.html">list_endpoints()</a></code>
@@ -126,16 +208,22 @@
         <dd>List available API endpoints</dd>
       </dl><dl><dt>
 
-          <code><a href="mw_rest_client.html">mw_rest_client()</a></code>
+          <code><a href="download_compound_structure.html">download_compound_structure()</a></code>
 
         </dt>
-        <dd>Initialize Metabolomics Workbench REST client</dd>
+        <dd>Download compound structure file</dd>
       </dl><dl><dt>
 
-          <code><a href="mwbenchr-package.html">mwbenchr-package</a></code> <code><a href="mwbenchr-package.html">mwbenchr</a></code>
+          <code><a href="flatten_entry.html">flatten_entry()</a></code>
 
         </dt>
-        <dd>mwbenchr: R Interface to Metabolomics Workbench REST API</dd>
+        <dd>Flatten a metabolite entry with nested sample data</dd>
+      </dl><dl><dt>
+
+          <code><a href="mwbenchr.html">mwbenchr-package</a></code> <code><a href="mwbenchr.html">mwbenchr</a></code>
+
+        </dt>
+        <dd>mwbenchr: R Interface for Direct Access to Metabolomics Workbench REST API</dd>
       </dl><dl><dt>
 
           <code><a href="parse_mw_output.html">parse_mw_output()</a></code>
@@ -148,32 +236,9 @@
 
         </dt>
         <dd>Print method for mw_rest_client</dd>
-      </dl><dl><dt>
-
-          <code><a href="response_to_df.html">response_to_df()</a></code>
-
-        </dt>
-        <dd>Convert Response to Data Frame</dd>
-      </dl><dl><dt>
-
-          <code><a href="search_by_mass.html">search_by_mass()</a></code>
-
-        </dt>
-        <dd>Search compounds by mass</dd>
-      </dl><dl><dt>
-
-          <code><a href="search_metstat.html">search_metstat()</a></code>
-
-        </dt>
-        <dd>Search studies using MetStat criteria</dd>
-      </dl><dl><dt>
-
-          <code><a href="standardize_to_refmet.html">standardize_to_refmet()</a></code>
-
-        </dt>
-        <dd>Standardize metabolite name to RefMet</dd>
       </dl></div>
-  </main></div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
