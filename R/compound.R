@@ -156,7 +156,8 @@ download_compound_structure <- function(client, id_type, id_value,
         if (format == "png" || format == "sdf" || format == "molfile") {
             writeBin(compound_structure, save_path)
         } else {
-            writeLines(compound_structure, save_path)
+            # writeLines(compound_structure, save_path)
+            ## Will never reach this line [will be remove in next version]
         }
         message("File saved to ", save_path)
         return(NULL)

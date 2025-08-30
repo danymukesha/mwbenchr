@@ -106,11 +106,14 @@ calculate_exact_mass <- function(client, lipid_abbrev, ion_type) {
     )
 
     result <- mw_request(client, endpoint)
+    # cat("RAW RESULT:\n", result, "\n")
     clean_result <- gsub("\n", "", result)
     clean_result <- gsub("</br>", "\n", clean_result)
     # clean_result <- gsub("<.*?>", "", clean_result)
 
     components <- strsplit(clean_result, "\n")[[1]]
+
+    components <- components[components != ""]
 
     if (length(components) < 4) {
         stop("The response format is incorrect or incomplete.")
