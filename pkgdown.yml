@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   introduction: introduction.html
   mwbenchr: mwbenchr.html
-last_built: 2025-08-30T18:49Z
+last_built: 2025-08-30T18:54Z
 urls:
   reference: https://danymukesha.github.io/mwbenchr/reference
   article: https://danymukesha.github.io/mwbenchr/articles
