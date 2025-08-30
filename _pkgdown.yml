@@ -1,4 +1,87 @@
+# _pkgdown.yml
+
+title: mwbenchr
 url: https://danymukesha.github.io/mwbenchr
+
 template:
   bootstrap: 5
 
+home:
+  title: mwbenchr
+  sidebar:
+    structure: [links, license, community, citation]
+
+navbar:
+  structure:
+    left: [home, reference, articles, news]
+    right: [github]
+  components:
+    home:
+      text: "Get started"
+      href: articles/mwbenchr.html
+    reference:
+      text: "Reference"
+      href: reference/index.html
+    articles:
+      text: "Articles"
+      menu:
+        - text: "Hands-On mwbenchr"
+          href: articles/introduction.html
+    news:
+      text: "Changelog"
+      href: news/index.html
+    github:
+      icon: fa-github
+      href: https://github.com/danymukesha/mwbenchr
+      aria-label: "GitHub repository"
+
+reference:
+  - title: "Client Setup"
+    contents:
+      - mw_rest_client
+
+  - title: "Study Data"
+    contents:
+      - get_study_summary
+      - get_study_factors
+      - get_study_metabolites
+      - get_study_data
+
+  - title: "Compound Information"
+    contents:
+      - get_compound_by_regno
+      - get_compound_by_pubchem_cid
+      - get_compound_classification
+
+  - title: "RefMet Integration"
+    contents:
+      - get_refmet_by_name
+      - standardize_to_refmet
+      - get_all_refmet_names
+
+  - title: "Mass Spectrometry"
+    contents:
+      - search_by_mass
+      - calculate_exact_mass
+
+  - title: "Search"
+    contents:
+      - search_metstat
+
+  - title: "Utilities"
+    contents:
+      - response_to_df
+      - list_endpoints
+      - download_compound_structure
+      - flatten_entry
+      - mwbenchr
+      - parse_mw_output
+      - print.mw_rest_client
+
+articles:
+  - title: "Hands-On mwbenchr"
+    contents:
+      - introduction
+
+news:
+  one_page: true

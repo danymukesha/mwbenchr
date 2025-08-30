@@ -1,8 +1,11 @@
-#' mwbenchr: R Interface to Metabolomics Workbench REST API
+#' mwbenchr: R Interface for Direct Access to Metabolomics Workbench REST API
 #'
-#' This package provides functions to interact with the Metabolomics
-#' Workbench REST API (v1.2). It supports contexts: study, compound,
-#' RefMet, MetStat, gene, protein, and moverz.
+#' The **mwbenchr** package enables programmatic retrieval and processing
+#' of metabolomics data through the Metabolomics Workbench REST API (v1.2).
+#' It provides access to study metadata, compound information,
+#' RefMet standardized metabolite names, metabolomics statistics (MetStat),
+#' gene and protein data, and pathway mappings (moverz), facilitating
+#' reproducible workflows and data integration for metabolomics research.
 #'
 #' @section Main Functions:
 #' \describe{
@@ -22,8 +25,9 @@
 #' @importFrom methods is
 #' @importFrom utils URLencode
 #' @import ggplot2
-#' @name mwbenchr-package
+#' @name mwbenchr
 #' @aliases mwbenchr
 #' @seealso \url{https://www.metabolomicsworkbench.org/tools/mw_rest.php}
+#' @docType package
 #' @keywords package
 "_PACKAGE"

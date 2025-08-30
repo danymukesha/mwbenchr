@@ -13,7 +13,8 @@ Description: Provides a comprehensive R interface to the Metabolomics
     compound, RefMet, MetStat, and mass spectrometry data retrieval with
     built-in caching and error handling.
 License: MIT + file LICENSE
-URL: https://github.com/danymukesha/mwbenchr
+URL: https://github.com/danymukesha/mwbenchr, 
+    https://danymukesha.github.io/mwbenchr
 BugReports: https://github.com/danymukesha/mwbenchr/issues
 Depends: 
     R (>= 4.3.0)
