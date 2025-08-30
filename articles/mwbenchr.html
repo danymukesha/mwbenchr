@@ -116,9 +116,9 @@ resource for metabolomics research.</p>
 <span></span>
 <span><span class="co"># Custom client configuration</span></span>
 <span><span class="va">client</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mw_rest_client.html">mw_rest_client</a></span><span class="op">(</span></span>
-<span>  cache <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  cache_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  timeout <span class="op">=</span> <span class="fl">60</span></span>
+<span>    cache <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    cache_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    timeout <span class="op">=</span> <span class="fl">60</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Basic client with default settings</span></span>
@@ -135,33 +135,7 @@ resource for metabolomics research.</p>
 </h3>
 <p>Get an overview of available functions:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/list_endpoints.html">list_endpoints</a></span><span class="op">(</span><span class="va">client</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Metabolomics Workbench REST API Endpoints</span></span>
-<span><span class="co">#&gt; =========================================</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; 1. Compound Functions:</span></span>
-<span><span class="co">#&gt;    get_compound_by_regno()        - Get compound by registry number</span></span>
-<span><span class="co">#&gt;    get_compound_by_pubchem_cid()  - Get compound by PubChem CID</span></span>
-<span><span class="co">#&gt;    get_compound_classification()  - Get compound classification</span></span>
-<span><span class="co">#&gt;    download_compound_structure()  - Download structure files</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; 2. Study Functions:</span></span>
-<span><span class="co">#&gt;    get_study_summary()            - Get study metadata</span></span>
-<span><span class="co">#&gt;    get_study_factors()            - Get experimental factors</span></span>
-<span><span class="co">#&gt;    get_study_metabolites()        - Get study metabolite list</span></span>
-<span><span class="co">#&gt;    get_study_data()               - Get study data matrix</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; 3. RefMet Functions:</span></span>
-<span><span class="co">#&gt;    get_refmet_by_name()           - Get RefMet information</span></span>
-<span><span class="co">#&gt;    standardize_to_refmet()        - Standardize metabolite names</span></span>
-<span><span class="co">#&gt;    get_all_refmet_names()         - Get all RefMet names</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; 4. Search Functions:</span></span>
-<span><span class="co">#&gt;    search_metstat()               - Search studies by criteria</span></span>
-<span><span class="co">#&gt;    search_by_mass()               - Search compounds by mass</span></span>
-<span><span class="co">#&gt;    calculate_exact_mass()         - Calculate exact masses</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Use ?function_name for detailed help on any function.</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/list_endpoints.html">list_endpoints</a></span><span class="op">(</span><span class="va">client</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -192,14 +166,14 @@ resource for metabolomics research.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Filter for human studies</span></span>
 <span><span class="va">human_studies</span> <span class="op">&lt;-</span> <span class="va">all_studies</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"Human"</span>, <span class="va">study_title</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span></span>
-<span>    <span class="va">study_id</span>, <span class="va">study_title</span> <span class="co"># , submit_date, last_modified</span></span>
-<span>  <span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"Human"</span>, <span class="va">study_title</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span></span>
+<span>        <span class="va">study_id</span>, <span class="va">study_title</span> <span class="co"># , submit_date, last_modified</span></span>
+<span>    <span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Look for specific topics</span></span>
 <span><span class="va">diabetes_studies</span> <span class="op">&lt;-</span> <span class="va">all_studies</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"diabetes|glucose"</span>, <span class="va">study_title</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"diabetes|glucose"</span>, <span class="va">study_title</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Found"</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">diabetes_studies</span><span class="op">)</span>, <span class="st">"diabetes-related studies"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Found 113 diabetes-related studies"</span></span></code></pre></div>
@@ -251,15 +225,15 @@ multiple criteria:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Search for human blood LCMS studies</span></span>
 <span><span class="va">human_blood_lcms</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/search_metstat.html">search_metstat</a></span><span class="op">(</span><span class="va">client</span>,</span>
-<span>  analysis_type <span class="op">=</span> <span class="st">"LCMS"</span>,</span>
-<span>  species <span class="op">=</span> <span class="st">"Human"</span>,</span>
-<span>  sample_source <span class="op">=</span> <span class="st">"Blood"</span></span>
+<span>    analysis_type <span class="op">=</span> <span class="st">"LCMS"</span>,</span>
+<span>    species <span class="op">=</span> <span class="st">"Human"</span>,</span>
+<span>    sample_source <span class="op">=</span> <span class="st">"Blood"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Search for mouse liver studies with any analytical method</span></span>
 <span><span class="va">mouse_liver</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/search_metstat.html">search_metstat</a></span><span class="op">(</span><span class="va">client</span>,</span>
-<span>  species <span class="op">=</span> <span class="st">"Mouse"</span>,</span>
-<span>  sample_source <span class="op">=</span> <span class="st">"Liver"</span></span>
+<span>    species <span class="op">=</span> <span class="st">"Mouse"</span>,</span>
+<span>    sample_source <span class="op">=</span> <span class="st">"Liver"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Search for studies containing specific metabolites</span></span>
@@ -267,10 +241,10 @@ multiple criteria:</p>
 <span></span>
 <span><span class="co"># Complex search combining multiple criteria</span></span>
 <span><span class="va">complex_search</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/search_metstat.html">search_metstat</a></span><span class="op">(</span><span class="va">client</span>,</span>
-<span>  analysis_type <span class="op">=</span> <span class="st">"LCMS"</span>,</span>
-<span>  polarity <span class="op">=</span> <span class="st">"POSITIVE"</span>,</span>
-<span>  species <span class="op">=</span> <span class="st">"Human"</span>,</span>
-<span>  sample_source <span class="op">=</span> <span class="st">"Urine"</span></span>
+<span>    analysis_type <span class="op">=</span> <span class="st">"LCMS"</span>,</span>
+<span>    polarity <span class="op">=</span> <span class="st">"POSITIVE"</span>,</span>
+<span>    species <span class="op">=</span> <span class="st">"Human"</span>,</span>
+<span>    sample_source <span class="op">=</span> <span class="st">"Urine"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -341,10 +315,10 @@ multiple criteria:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Search in RefMet database</span></span>
 <span><span class="va">mass_matches</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/search_by_mass.html">search_by_mass</a></span><span class="op">(</span><span class="va">client</span>,</span>
-<span>  db <span class="op">=</span> <span class="st">"REFMET"</span>,</span>
-<span>  mz <span class="op">=</span> <span class="fl">180.063</span>,</span>
-<span>  ion_type <span class="op">=</span> <span class="st">"M+H"</span>,</span>
-<span>  tolerance <span class="op">=</span> <span class="fl">0.01</span></span>
+<span>    db <span class="op">=</span> <span class="st">"REFMET"</span>,</span>
+<span>    mz <span class="op">=</span> <span class="fl">180.063</span>,</span>
+<span>    ion_type <span class="op">=</span> <span class="st">"M+H"</span>,</span>
+<span>    tolerance <span class="op">=</span> <span class="fl">0.01</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mass_matches</span><span class="op">)</span></span>
@@ -361,18 +335,18 @@ multiple criteria:</p>
 <span></span>
 <span><span class="co"># Search in lipids database with different ion type</span></span>
 <span><span class="va">lipid_matches</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/search_by_mass.html">search_by_mass</a></span><span class="op">(</span><span class="va">client</span>,</span>
-<span>  db <span class="op">=</span> <span class="st">"LIPIDS"</span>,</span>
-<span>  mz <span class="op">=</span> <span class="fl">760.585</span>,</span>
-<span>  ion_type <span class="op">=</span> <span class="st">"M+H"</span>,</span>
-<span>  tolerance <span class="op">=</span> <span class="fl">0.05</span></span>
+<span>    db <span class="op">=</span> <span class="st">"LIPIDS"</span>,</span>
+<span>    mz <span class="op">=</span> <span class="fl">760.585</span>,</span>
+<span>    ion_type <span class="op">=</span> <span class="st">"M+H"</span>,</span>
+<span>    tolerance <span class="op">=</span> <span class="fl">0.05</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Compare results across databases</span></span>
 <span><span class="va">mb_matches</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/search_by_mass.html">search_by_mass</a></span><span class="op">(</span><span class="va">client</span>,</span>
-<span>  db <span class="op">=</span> <span class="st">"MB"</span>,</span>
-<span>  mz <span class="op">=</span> <span class="fl">180.063</span>,</span>
-<span>  ion_type <span class="op">=</span> <span class="st">"M+H"</span>,</span>
-<span>  tolerance <span class="op">=</span> <span class="fl">0.01</span></span>
+<span>    db <span class="op">=</span> <span class="st">"MB"</span>,</span>
+<span>    mz <span class="op">=</span> <span class="fl">180.063</span>,</span>
+<span>    ion_type <span class="op">=</span> <span class="st">"M+H"</span>,</span>
+<span>    tolerance <span class="op">=</span> <span class="fl">0.01</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -391,8 +365,8 @@ multiple criteria:</p>
 <span></span>
 <span><span class="co"># Compare masses</span></span>
 <span><span class="va">mass_comparison</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>  ion_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"M+H"</span>, <span class="st">"M+Na"</span>, <span class="st">"M-H"</span><span class="op">)</span>,</span>
-<span>  exact_mass <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">pc_mass</span><span class="op">$</span><span class="va">mz</span>, <span class="va">pc_sodium</span><span class="op">$</span><span class="va">mz</span>, <span class="va">pc_negative</span><span class="op">$</span><span class="va">mz</span><span class="op">)</span></span>
+<span>    ion_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"M+H"</span>, <span class="st">"M+Na"</span>, <span class="st">"M-H"</span><span class="op">)</span>,</span>
+<span>    exact_mass <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">pc_mass</span><span class="op">$</span><span class="va">mz</span>, <span class="va">pc_sodium</span><span class="op">$</span><span class="va">mz</span>, <span class="va">pc_negative</span><span class="op">$</span><span class="va">mz</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mass_comparison</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   ion_type exact_mass</span></span>
@@ -411,9 +385,9 @@ multiple criteria:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 1. Find relevant studies</span></span>
 <span><span class="va">studies</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/search_metstat.html">search_metstat</a></span><span class="op">(</span><span class="va">client</span>,</span>
-<span>  analysis_type <span class="op">=</span> <span class="st">"LCMS"</span>,</span>
-<span>  species <span class="op">=</span> <span class="st">"Human"</span>,</span>
-<span>  sample_source <span class="op">=</span> <span class="st">"Blood"</span></span>
+<span>    analysis_type <span class="op">=</span> <span class="st">"LCMS"</span>,</span>
+<span>    species <span class="op">=</span> <span class="st">"Human"</span>,</span>
+<span>    sample_source <span class="op">=</span> <span class="st">"Blood"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Select a study of interest</span></span>
@@ -437,17 +411,18 @@ multiple criteria:</p>
 <span></span>
 <span><span class="co"># 5. Data processing</span></span>
 <span><span class="va">numeric_data</span> <span class="op">&lt;-</span> <span class="va">data_matrix</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">study_id</span><span class="op">:</span><span class="va">units</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># Remove metadata columns</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">as.numeric</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">study_id</span><span class="op">:</span><span class="va">units</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># Remove metadata columns</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">as.numeric</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Calculate basic statistics</span></span>
 <span><span class="va">metabolite_stats</span> <span class="op">&lt;-</span> <span class="va">data_matrix</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">metabolite_name</span>, <span class="va">refmet_name</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_cols.html" class="external-link">bind_cols</a></span><span class="op">(</span></span>
-<span>    mean_intensity <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowMeans</a></span><span class="op">(</span><span class="va">numeric_data</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>    cv <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">numeric_data</span>, <span class="fl">1</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> </span>
-<span>        <span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">x</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">metabolite_name</span>, <span class="va">refmet_name</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_cols.html" class="external-link">bind_cols</a></span><span class="op">(</span></span>
+<span>        mean_intensity <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowMeans</a></span><span class="op">(</span><span class="va">numeric_data</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>        cv <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">numeric_data</span>, <span class="fl">1</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>            <span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">x</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>        <span class="op">}</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">metabolite_stats</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
@@ -471,29 +446,29 @@ multiple criteria:</p>
 <span></span>
 <span><span class="co"># Combine and get unique names</span></span>
 <span><span class="va">all_metabolite_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>  <span class="va">study1_metabolites</span><span class="op">$</span><span class="va">metabolite_name</span>,</span>
-<span>  <span class="va">study2_metabolites</span><span class="op">$</span><span class="va">metabolite_name</span></span>
+<span>    <span class="va">study1_metabolites</span><span class="op">$</span><span class="va">metabolite_name</span>,</span>
+<span>    <span class="va">study2_metabolites</span><span class="op">$</span><span class="va">metabolite_name</span></span>
 <span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Standardize names (in practice, you'd do this in batches)</span></span>
 <span><span class="va">standardized_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">all_metabolite_names</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, <span class="kw">function</span><span class="op">(</span><span class="va">name</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span></span>
-<span>    <span class="op">{</span></span>
-<span>      <span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/standardize_to_refmet.html">standardize_to_refmet</a></span><span class="op">(</span><span class="va">client</span>, <span class="va">name</span><span class="op">)</span></span>
-<span>      <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>        original_name <span class="op">=</span> <span class="va">name</span>,</span>
-<span>        refmet_name <span class="op">=</span> <span class="va">result</span><span class="op">$</span><span class="va">refmet_name</span> <span class="op"><a href="https://rdrr.io/r/base/Control.html" class="external-link">%||%</a></span> <span class="cn">NA</span>,</span>
-<span>        stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span>      <span class="op">)</span></span>
-<span>    <span class="op">}</span>,</span>
-<span>    error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="op">{</span></span>
-<span>      <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>        original_name <span class="op">=</span> <span class="va">name</span>,</span>
-<span>        refmet_name <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>        stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span>      <span class="op">)</span></span>
-<span>    <span class="op">}</span></span>
-<span>  <span class="op">)</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span></span>
+<span>        <span class="op">{</span></span>
+<span>            <span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/standardize_to_refmet.html">standardize_to_refmet</a></span><span class="op">(</span><span class="va">client</span>, <span class="va">name</span><span class="op">)</span></span>
+<span>            <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>                original_name <span class="op">=</span> <span class="va">name</span>,</span>
+<span>                refmet_name <span class="op">=</span> <span class="va">result</span><span class="op">$</span><span class="va">refmet_name</span> <span class="op"><a href="https://rdrr.io/r/base/Control.html" class="external-link">%||%</a></span> <span class="cn">NA</span>,</span>
+<span>                stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>            <span class="op">)</span></span>
+<span>        <span class="op">}</span>,</span>
+<span>        error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="op">{</span></span>
+<span>            <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>                original_name <span class="op">=</span> <span class="va">name</span>,</span>
+<span>                refmet_name <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>                stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>            <span class="op">)</span></span>
+<span>        <span class="op">}</span></span>
+<span>    <span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">standardization_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">standardized_names</span><span class="op">)</span></span>
@@ -514,13 +489,13 @@ multiple criteria:</p>
 <span><span class="va">studies_to_compare</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ST000001"</span>, <span class="st">"ST000002"</span>, <span class="st">"ST000003"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">metabolite_coverage</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">studies_to_compare</span>, <span class="kw">function</span><span class="op">(</span><span class="va">study_id</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">metabolites</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_study_metabolites.html">get_study_metabolites</a></span><span class="op">(</span><span class="va">client</span>, <span class="va">study_id</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>    study_id <span class="op">=</span> <span class="va">study_id</span>,</span>
-<span>    metabolite_count <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">metabolites</span><span class="op">)</span>,</span>
-<span>    unique_refmet <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">metabolites</span><span class="op">$</span><span class="va">refmet_name</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>    stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span>  <span class="op">)</span></span>
+<span>    <span class="va">metabolites</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_study_metabolites.html">get_study_metabolites</a></span><span class="op">(</span><span class="va">client</span>, <span class="va">study_id</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>        study_id <span class="op">=</span> <span class="va">study_id</span>,</span>
+<span>        metabolite_count <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">metabolites</span><span class="op">)</span>,</span>
+<span>        unique_refmet <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">metabolites</span><span class="op">$</span><span class="va">refmet_name</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>        stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>    <span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">coverage_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">metabolite_coverage</span><span class="op">)</span></span>
@@ -540,28 +515,28 @@ multiple criteria:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Visualize study submission over time</span></span>
 <span><span class="va">studies_with_dates</span> <span class="op">&lt;-</span> <span class="va">all_studies</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">submit_date</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
-<span>    submit_year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="va">submit_date</span><span class="op">)</span>, <span class="st">"%Y"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>    analysis_type <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span></span>
-<span>      <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"LCMS"</span>, <span class="va">study_title</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">~</span> <span class="st">"LC-MS"</span>,</span>
-<span>      <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"GCMS"</span>, <span class="va">study_title</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">~</span> <span class="st">"GC-MS"</span>,</span>
-<span>      <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"NMR"</span>, <span class="va">study_title</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">~</span> <span class="st">"NMR"</span>,</span>
-<span>      <span class="cn">TRUE</span> <span class="op">~</span> <span class="st">"Other"</span></span>
-<span>    <span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">submit_year</span> <span class="op">&gt;=</span> <span class="fl">2010</span> <span class="op">&amp;</span> <span class="va">submit_year</span> <span class="op">&lt;=</span> <span class="fl">2023</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">submit_date</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>        submit_year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="va">submit_date</span><span class="op">)</span>, <span class="st">"%Y"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>        analysis_type <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span></span>
+<span>            <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"LCMS"</span>, <span class="va">study_title</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">~</span> <span class="st">"LC-MS"</span>,</span>
+<span>            <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"GCMS"</span>, <span class="va">study_title</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">~</span> <span class="st">"GC-MS"</span>,</span>
+<span>            <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"NMR"</span>, <span class="va">study_title</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">~</span> <span class="st">"NMR"</span>,</span>
+<span>            <span class="cn">TRUE</span> <span class="op">~</span> <span class="st">"Other"</span></span>
+<span>        <span class="op">)</span></span>
+<span>    <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">submit_year</span> <span class="op">&gt;=</span> <span class="fl">2010</span> <span class="op">&amp;</span> <span class="va">submit_year</span> <span class="op">&lt;=</span> <span class="fl">2023</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Plot submissions by year and analysis type</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">studies_with_dates</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">submit_year</span>, fill <span class="op">=</span> <span class="va">analysis_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"stack"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
-<span>    title <span class="op">=</span> <span class="st">"Metabolomics Workbench Study Submissions by Year"</span>,</span>
-<span>    x <span class="op">=</span> <span class="st">"Submission Year"</span>,</span>
-<span>    y <span class="op">=</span> <span class="st">"Number of Studies"</span>,</span>
-<span>    fill <span class="op">=</span> <span class="st">"Analysis Type"</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"stack"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
+<span>        title <span class="op">=</span> <span class="st">"Metabolomics Workbench Study Submissions by Year"</span>,</span>
+<span>        x <span class="op">=</span> <span class="st">"Submission Year"</span>,</span>
+<span>        y <span class="op">=</span> <span class="st">"Number of Studies"</span>,</span>
+<span>        fill <span class="op">=</span> <span class="st">"Analysis Type"</span></span>
+<span>    <span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="mass-accuracy-visualization">Mass Accuracy Visualization<a class="anchor" aria-label="anchor" href="#mass-accuracy-visualization"></a>
@@ -572,26 +547,26 @@ multiple criteria:</p>
 <span><span class="va">target_mz</span> <span class="op">&lt;-</span> <span class="fl">180.063</span></span>
 <span></span>
 <span><span class="va">mass_accuracy_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">tolerance_values</span>, <span class="kw">function</span><span class="op">(</span><span class="va">tol</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">matches</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/search_by_mass.html">search_by_mass</a></span><span class="op">(</span><span class="va">client</span>, <span class="st">"REFMET"</span>, <span class="va">target_mz</span>, <span class="st">"M+H"</span>, <span class="va">tol</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>    tolerance <span class="op">=</span> <span class="va">tol</span>,</span>
-<span>    matches <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">matches</span><span class="op">)</span>,</span>
-<span>    stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span>  <span class="op">)</span></span>
+<span>    <span class="va">matches</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/search_by_mass.html">search_by_mass</a></span><span class="op">(</span><span class="va">client</span>, <span class="st">"REFMET"</span>, <span class="va">target_mz</span>, <span class="st">"M+H"</span>, <span class="va">tol</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>        tolerance <span class="op">=</span> <span class="va">tol</span>,</span>
+<span>        matches <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">matches</span><span class="op">)</span>,</span>
+<span>        stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>    <span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">accuracy_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">mass_accuracy_results</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">accuracy_df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">tolerance</span>, y <span class="op">=</span> <span class="va">matches</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_log10</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
-<span>    title <span class="op">=</span> <span class="st">"Number of Mass Matches vs. Tolerance"</span>,</span>
-<span>    x <span class="op">=</span> <span class="st">"Mass Tolerance (Da, log scale)"</span>,</span>
-<span>    y <span class="op">=</span> <span class="st">"Number of Matches"</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_log10</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
+<span>        title <span class="op">=</span> <span class="st">"Number of Mass Matches vs. Tolerance"</span>,</span>
+<span>        x <span class="op">=</span> <span class="st">"Mass Tolerance (Da, log scale)"</span>,</span>
+<span>        y <span class="op">=</span> <span class="st">"Number of Matches"</span></span>
+<span>    <span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="mwbenchr_files/figure-html/mass-accuracy-1.png" width="700"></p>
 </div>
 </div>
@@ -604,26 +579,28 @@ multiple criteria:</p>
 <p>Making safely API calls with retries</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">safe_api_call</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">func</span>, <span class="va">...</span>, <span class="va">max_attempts</span> <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">attempt</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">max_attempts</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="va">result</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span></span>
-<span>      <span class="op">{</span></span>
-<span>        <span class="fu">func</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
-<span>      <span class="op">}</span>,</span>
-<span>      error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="op">{</span></span>
-<span>        <span class="kw">if</span> <span class="op">(</span><span class="va">attempt</span> <span class="op">==</span> <span class="va">max_attempts</span><span class="op">)</span> <span class="op">{</span></span>
-<span>          <span class="kw"><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop</a></span><span class="op">(</span><span class="st">"API call failed after "</span>, <span class="va">max_attempts</span>, <span class="st">" attempts: "</span>, </span>
-<span>               <span class="va">e</span><span class="op">$</span><span class="va">message</span><span class="op">)</span></span>
-<span>        <span class="op">}</span></span>
-<span>        <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="st">"Attempt "</span>, <span class="va">attempt</span>, <span class="st">" failed, retrying..."</span><span class="op">)</span></span>
-<span>        <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
-<span>        <span class="cn">NULL</span></span>
-<span>      <span class="op">}</span></span>
-<span>    <span class="op">)</span></span>
+<span>    <span class="kw">for</span> <span class="op">(</span><span class="va">attempt</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">max_attempts</span><span class="op">)</span> <span class="op">{</span></span>
+<span>        <span class="va">result</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span></span>
+<span>            <span class="op">{</span></span>
+<span>                <span class="fu">func</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
+<span>            <span class="op">}</span>,</span>
+<span>            error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="op">{</span></span>
+<span>                <span class="kw">if</span> <span class="op">(</span><span class="va">attempt</span> <span class="op">==</span> <span class="va">max_attempts</span><span class="op">)</span> <span class="op">{</span></span>
+<span>                    <span class="kw"><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop</a></span><span class="op">(</span></span>
+<span>                        <span class="st">"API call failed after "</span>, <span class="va">max_attempts</span>, <span class="st">" attempts: "</span>,</span>
+<span>                        <span class="va">e</span><span class="op">$</span><span class="va">message</span></span>
+<span>                    <span class="op">)</span></span>
+<span>                <span class="op">}</span></span>
+<span>                <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="st">"Attempt "</span>, <span class="va">attempt</span>, <span class="st">" failed, retrying..."</span><span class="op">)</span></span>
+<span>                <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span>                <span class="cn">NULL</span></span>
+<span>            <span class="op">}</span></span>
+<span>        <span class="op">)</span></span>
 <span></span>
-<span>    <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>      <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
+<span>        <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>            <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
+<span>        <span class="op">}</span></span>
 <span>    <span class="op">}</span></span>
-<span>  <span class="op">}</span></span>
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="va">study_data</span> <span class="op">&lt;-</span> <span class="fu">safe_api_call</span><span class="op">(</span><span class="va">get_study_summary</span>, <span class="va">client</span>, <span class="st">"ST000001"</span><span class="op">)</span></span></code></pre></div>
@@ -634,36 +611,36 @@ multiple criteria:</p>
 <p>Processing multiple studies efficiently</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">process_studies</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">client</span>, <span class="va">study_ids</span>, <span class="va">max_concurrent</span> <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>    <span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">study_ids</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="va">study_id</span> <span class="op">&lt;-</span> <span class="va">study_ids</span><span class="op">[</span><span class="va">i</span><span class="op">]</span></span>
+<span>    <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">study_ids</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>        <span class="va">study_id</span> <span class="op">&lt;-</span> <span class="va">study_ids</span><span class="op">[</span><span class="va">i</span><span class="op">]</span></span>
 <span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Processing study"</span>, <span class="va">i</span>, <span class="st">"of"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">study_ids</span><span class="op">)</span>, <span class="st">":"</span>, <span class="va">study_id</span>, <span class="st">"\n"</span><span class="op">)</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Processing study"</span>, <span class="va">i</span>, <span class="st">"of"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">study_ids</span><span class="op">)</span>, <span class="st">":"</span>, <span class="va">study_id</span>, <span class="st">"\n"</span><span class="op">)</span></span>
 <span></span>
-<span>    <span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span></span>
-<span>      <span class="op">{</span></span>
-<span>        <span class="va">summary</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_study_summary.html">get_study_summary</a></span><span class="op">(</span><span class="va">client</span>, <span class="va">study_id</span><span class="op">)</span></span>
-<span>        <span class="va">metabolites</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_study_metabolites.html">get_study_metabolites</a></span><span class="op">(</span><span class="va">client</span>, <span class="va">study_id</span><span class="op">)</span></span>
+<span>        <span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span></span>
+<span>            <span class="op">{</span></span>
+<span>                <span class="va">summary</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_study_summary.html">get_study_summary</a></span><span class="op">(</span><span class="va">client</span>, <span class="va">study_id</span><span class="op">)</span></span>
+<span>                <span class="va">metabolites</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_study_metabolites.html">get_study_metabolites</a></span><span class="op">(</span><span class="va">client</span>, <span class="va">study_id</span><span class="op">)</span></span>
 <span></span>
-<span>        <span class="va">results</span><span class="op">[[</span><span class="va">study_id</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>          summary <span class="op">=</span> <span class="va">summary</span>,</span>
-<span>          metabolite_count <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">metabolites</span><span class="op">)</span>,</span>
-<span>          metabolites <span class="op">=</span> <span class="va">metabolites</span><span class="op">$</span><span class="va">metabolite_name</span></span>
+<span>                <span class="va">results</span><span class="op">[[</span><span class="va">study_id</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>                    summary <span class="op">=</span> <span class="va">summary</span>,</span>
+<span>                    metabolite_count <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">metabolites</span><span class="op">)</span>,</span>
+<span>                    metabolites <span class="op">=</span> <span class="va">metabolites</span><span class="op">$</span><span class="va">metabolite_name</span></span>
+<span>                <span class="op">)</span></span>
+<span></span>
+<span>                <span class="kw">if</span> <span class="op">(</span><span class="va">i</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">%%</a></span> <span class="va">max_concurrent</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>                    <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span>                <span class="op">}</span></span>
+<span>            <span class="op">}</span>,</span>
+<span>            error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="op">{</span></span>
+<span>                <span class="kw"><a href="https://rdrr.io/r/base/warning.html" class="external-link">warning</a></span><span class="op">(</span><span class="st">"Failed to process study "</span>, <span class="va">study_id</span>, <span class="st">": "</span>, <span class="va">e</span><span class="op">$</span><span class="va">message</span><span class="op">)</span></span>
+<span>                <span class="va">results</span><span class="op">[[</span><span class="va">study_id</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>error <span class="op">=</span> <span class="va">e</span><span class="op">$</span><span class="va">message</span><span class="op">)</span></span>
+<span>            <span class="op">}</span></span>
 <span>        <span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
 <span></span>
-<span>        <span class="kw">if</span> <span class="op">(</span><span class="va">i</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">%%</a></span> <span class="va">max_concurrent</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
-<span>          <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
-<span>        <span class="op">}</span></span>
-<span>      <span class="op">}</span>,</span>
-<span>      error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="op">{</span></span>
-<span>        <span class="kw"><a href="https://rdrr.io/r/base/warning.html" class="external-link">warning</a></span><span class="op">(</span><span class="st">"Failed to process study "</span>, <span class="va">study_id</span>, <span class="st">": "</span>, <span class="va">e</span><span class="op">$</span><span class="va">message</span><span class="op">)</span></span>
-<span>        <span class="va">results</span><span class="op">[[</span><span class="va">study_id</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>error <span class="op">=</span> <span class="va">e</span><span class="op">$</span><span class="va">message</span><span class="op">)</span></span>
-<span>      <span class="op">}</span></span>
-<span>    <span class="op">)</span></span>
-<span>  <span class="op">}</span></span>
-<span></span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="co"># simple usage (with a small subset)</span></span>
@@ -683,10 +660,9 @@ multiple criteria:</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># set up caching for expensive operations</span></span>
 <span><span class="va">cached_client</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mw_rest_client.html">mw_rest_client</a></span><span class="op">(</span></span>
-<span>  cache <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  cache_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"mwbenchr_cache"</span><span class="op">)</span></span>
+<span>    cache <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    cache_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"mwbenchr_cache"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span></span>
 <span><span class="va">refmet_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_all_refmet_names.html">get_all_refmet_names</a></span><span class="op">(</span><span class="va">cached_client</span><span class="op">)</span> <span class="co"># Large dataset</span></span>
 <span><span class="va">study_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_study_summary.html">get_study_summary</a></span><span class="op">(</span><span class="va">cached_client</span><span class="op">)</span> <span class="co"># Frequently accessed</span></span>
 <span></span>
@@ -699,86 +675,119 @@ multiple criteria:</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># For large datasets, process in chunks</span></span>
 <span><span class="va">process_large_study</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">client</span>, <span class="va">study_id</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="co"># Get metadata first (small)</span></span>
-<span>  <span class="va">summary</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_study_summary.html">get_study_summary</a></span><span class="op">(</span><span class="va">client</span>, <span class="va">study_id</span><span class="op">)</span></span>
-<span>  <span class="va">metabolites</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_study_metabolites.html">get_study_metabolites</a></span><span class="op">(</span><span class="va">client</span>, <span class="va">study_id</span><span class="op">)</span></span>
+<span>    <span class="co"># Get metadata first (small)</span></span>
+<span>    <span class="va">summary</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_study_summary.html">get_study_summary</a></span><span class="op">(</span><span class="va">client</span>, <span class="va">study_id</span><span class="op">)</span></span>
+<span>    <span class="va">metabolites</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_study_metabolites.html">get_study_metabolites</a></span><span class="op">(</span><span class="va">client</span>, <span class="va">study_id</span><span class="op">)</span></span>
 <span></span>
-<span>  <span class="co"># Check data size before loading full matrix</span></span>
-<span>  <span class="va">n_metabolites</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">metabolites</span><span class="op">)</span></span>
+<span>    <span class="co"># Check data size before loading full matrix</span></span>
+<span>    <span class="va">n_metabolites</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">metabolites</span><span class="op">)</span></span>
 <span></span>
-<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">n_metabolites</span> <span class="op">&gt;</span> <span class="fl">1000</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="kw"><a href="https://rdrr.io/r/base/warning.html" class="external-link">warning</a></span><span class="op">(</span></span>
-<span>      <span class="st">"Large study detected ("</span>, <span class="va">n_metabolites</span>, <span class="st">" metabolites). "</span>,</span>
-<span>      <span class="st">"Consider processing in chunks."</span></span>
-<span>    <span class="op">)</span></span>
-<span>  <span class="op">}</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="va">n_metabolites</span> <span class="op">&gt;</span> <span class="fl">1000</span><span class="op">)</span> <span class="op">{</span></span>
+<span>        <span class="kw"><a href="https://rdrr.io/r/base/warning.html" class="external-link">warning</a></span><span class="op">(</span></span>
+<span>            <span class="st">"Large study detected ("</span>, <span class="va">n_metabolites</span>, <span class="st">" metabolites). "</span>,</span>
+<span>            <span class="st">"Consider processing in chunks."</span></span>
+<span>        <span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
 <span></span>
-<span>  <span class="co"># Load full data only if reasonable size</span></span>
-<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">n_metabolites</span> <span class="op">&lt;=</span> <span class="fl">5000</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="va">data_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_study_data.html">get_study_data</a></span><span class="op">(</span><span class="va">client</span>, <span class="va">study_id</span><span class="op">)</span></span>
-<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>      summary <span class="op">=</span> <span class="va">summary</span>,</span>
-<span>      metabolites <span class="op">=</span> <span class="va">metabolites</span>,</span>
-<span>      data <span class="op">=</span> <span class="va">data_matrix</span></span>
-<span>    <span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
-<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>      summary <span class="op">=</span> <span class="va">summary</span>,</span>
-<span>      metabolites <span class="op">=</span> <span class="va">metabolites</span>,</span>
-<span>      data <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>      note <span class="op">=</span> <span class="st">"Data matrix too large - not loaded"</span></span>
-<span>    <span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">}</span></span>
+<span>    <span class="co"># Load full data only if reasonable size</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="va">n_metabolites</span> <span class="op">&lt;=</span> <span class="fl">5000</span><span class="op">)</span> <span class="op">{</span></span>
+<span>        <span class="va">data_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_study_data.html">get_study_data</a></span><span class="op">(</span><span class="va">client</span>, <span class="va">study_id</span><span class="op">)</span></span>
+<span>        <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>            summary <span class="op">=</span> <span class="va">summary</span>,</span>
+<span>            metabolites <span class="op">=</span> <span class="va">metabolites</span>,</span>
+<span>            data <span class="op">=</span> <span class="va">data_matrix</span></span>
+<span>        <span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>        <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>            summary <span class="op">=</span> <span class="va">summary</span>,</span>
+<span>            metabolites <span class="op">=</span> <span class="va">metabolites</span>,</span>
+<span>            data <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>            note <span class="op">=</span> <span class="st">"Data matrix too large - not loaded"</span></span>
+<span>        <span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
 <span><span class="op">}</span></span></code></pre></div>
+<details><summary><strong>Session Info</strong>
+</summary><div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">sessioninfo</span><span class="fu">::</span><span class="fu"><a href="https://sessioninfo.r-lib.org/reference/session_info.html" class="external-link">session_info</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Session info ───────────────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">#&gt;  <span style="color: #555555; font-style: italic;">setting </span> <span style="color: #555555; font-style: italic;">value</span></span></span>
+<span><span class="co">#&gt;  version  R version 4.5.1 (2025-06-13)</span></span>
+<span><span class="co">#&gt;  os       Ubuntu 24.04.3 LTS</span></span>
+<span><span class="co">#&gt;  system   x86_64, linux-gnu</span></span>
+<span><span class="co">#&gt;  ui       X11</span></span>
+<span><span class="co">#&gt;  language en</span></span>
+<span><span class="co">#&gt;  collate  C.UTF-8</span></span>
+<span><span class="co">#&gt;  ctype    C.UTF-8</span></span>
+<span><span class="co">#&gt;  tz       UTC</span></span>
+<span><span class="co">#&gt;  date     2025-08-30</span></span>
+<span><span class="co">#&gt;  pandoc   3.1.11 @ /opt/hostedtoolcache/pandoc/3.1.11/x64/ (via rmarkdown)</span></span>
+<span><span class="co">#&gt;  quarto   NA</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Packages ───────────────────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">#&gt;  <span style="color: #555555; font-style: italic;">package     </span> <span style="color: #555555; font-style: italic;">*</span> <span style="color: #555555; font-style: italic;">version</span> <span style="color: #555555; font-style: italic;">date (UTC)</span> <span style="color: #555555; font-style: italic;">lib</span> <span style="color: #555555; font-style: italic;">source</span></span></span>
+<span><span class="co">#&gt;  BiocManager    1.30.26 <span style="color: #555555;">2025-06-05</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  BiocStyle    * 2.36.0  <span style="color: #555555;">2025-04-15</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">Bioconduc~</span></span></span>
+<span><span class="co">#&gt;  bit            4.6.0   <span style="color: #555555;">2025-03-06</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  bit64          4.6.0-1 <span style="color: #555555;">2025-01-16</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  bookdown       0.44    <span style="color: #555555;">2025-08-21</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  bslib          0.9.0   <span style="color: #555555;">2025-01-30</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  cachem         1.1.0   <span style="color: #555555;">2024-05-16</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  cli            3.6.5   <span style="color: #555555;">2025-04-23</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  crayon         1.5.3   <span style="color: #555555;">2024-06-20</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  curl           7.0.0   <span style="color: #555555;">2025-08-19</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  desc           1.4.3   <span style="color: #555555;">2023-12-10</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  digest         0.6.37  <span style="color: #555555;">2024-08-19</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  dplyr        * 1.1.4   <span style="color: #555555;">2023-11-17</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  evaluate       1.0.5   <span style="color: #555555;">2025-08-27</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  farver         2.1.2   <span style="color: #555555;">2024-05-13</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  fastmap        1.2.0   <span style="color: #555555;">2024-05-15</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  fs             1.6.6   <span style="color: #555555;">2025-04-12</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  generics       0.1.4   <span style="color: #555555;">2025-05-09</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  ggplot2      * 3.5.2   <span style="color: #555555;">2025-04-09</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  glue           1.8.0   <span style="color: #555555;">2024-09-30</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  gtable         0.3.6   <span style="color: #555555;">2024-10-25</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  htmltools      0.5.8.1 <span style="color: #555555;">2024-04-04</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  httr2          1.2.1   <span style="color: #555555;">2025-07-22</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  jquerylib      0.1.4   <span style="color: #555555;">2021-04-26</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  jsonlite       2.0.0   <span style="color: #555555;">2025-03-27</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  knitr          1.50    <span style="color: #555555;">2025-03-16</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  labeling       0.4.3   <span style="color: #555555;">2023-08-29</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  lifecycle      1.0.4   <span style="color: #555555;">2023-11-07</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  magrittr       2.0.3   <span style="color: #555555;">2022-03-30</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  mwbenchr     * 0.0.1   <span style="color: #555555;">2025-08-30</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">local</span></span></span>
+<span><span class="co">#&gt;  pillar         1.11.0  <span style="color: #555555;">2025-07-04</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  pkgconfig      2.0.3   <span style="color: #555555;">2019-09-22</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  pkgdown        2.1.3   <span style="color: #555555;">2025-05-25</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">any (@2.1.3)</span></span></span>
+<span><span class="co">#&gt;  purrr          1.1.0   <span style="color: #555555;">2025-07-10</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  R6             2.6.1   <span style="color: #555555;">2025-02-15</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  ragg           1.4.0   <span style="color: #555555;">2025-04-10</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  rappdirs       0.3.3   <span style="color: #555555;">2021-01-31</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  RColorBrewer   1.1-3   <span style="color: #555555;">2022-04-03</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  rlang          1.1.6   <span style="color: #555555;">2025-04-11</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  rmarkdown      2.29    <span style="color: #555555;">2024-11-04</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  sass           0.4.10  <span style="color: #555555;">2025-04-11</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  scales         1.4.0   <span style="color: #555555;">2025-04-24</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  sessioninfo    1.2.3   <span style="color: #555555;">2025-02-05</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">any (@1.2.3)</span></span></span>
+<span><span class="co">#&gt;  systemfonts    1.2.3   <span style="color: #555555;">2025-04-30</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  textshaping    1.0.1   <span style="color: #555555;">2025-05-01</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  tibble         3.3.0   <span style="color: #555555;">2025-06-08</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  tidyselect     1.2.1   <span style="color: #555555;">2024-03-11</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  tzdb           0.5.0   <span style="color: #555555;">2025-03-15</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  utf8           1.2.6   <span style="color: #555555;">2025-06-08</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  vctrs          0.6.5   <span style="color: #555555;">2023-12-01</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  vroom          1.6.5   <span style="color: #555555;">2023-12-05</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  withr          3.0.2   <span style="color: #555555;">2024-10-28</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  xfun           0.53    <span style="color: #555555;">2025-08-19</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt;  yaml           2.3.10  <span style="color: #555555;">2024-07-26</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [1] /home/runner/work/_temp/Library</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [2] /opt/R/4.5.1/lib/R/site-library</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [3] /opt/R/4.5.1/lib/R/library</span></span></span>
+<span><span class="co">#&gt;  <span style="color: #BBBBBB; background-color: #BB0000;">*</span> ── Packages attached to the search path.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">──────────────────────────────────────────────────────────────────────────────</span></span></span></code></pre></div>
+</details>
 </div>
-</div>
-<div class="section level2">
-<h2 id="session-information">Session Information<a class="anchor" aria-label="anchor" href="#session-information"></a>
-</h2>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; R version 4.5.1 (2025-06-13)</span></span>
-<span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu</span></span>
-<span><span class="co">#&gt; Running under: Ubuntu 24.04.3 LTS</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Matrix products: default</span></span>
-<span><span class="co">#&gt; BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
-<span><span class="co">#&gt; LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.26.so;  LAPACK version 3.12.0</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; locale:</span></span>
-<span><span class="co">#&gt;  [1] LC_CTYPE=C.UTF-8       LC_NUMERIC=C           LC_TIME=C.UTF-8       </span></span>
-<span><span class="co">#&gt;  [4] LC_COLLATE=C.UTF-8     LC_MONETARY=C.UTF-8    LC_MESSAGES=C.UTF-8   </span></span>
-<span><span class="co">#&gt;  [7] LC_PAPER=C.UTF-8       LC_NAME=C              LC_ADDRESS=C          </span></span>
-<span><span class="co">#&gt; [10] LC_TELEPHONE=C         LC_MEASUREMENT=C.UTF-8 LC_IDENTIFICATION=C   </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; time zone: UTC</span></span>
-<span><span class="co">#&gt; tzcode source: system (glibc)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; attached base packages:</span></span>
-<span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt; [1] ggplot2_3.5.2    dplyr_1.1.4      mwbenchr_0.0.1   BiocStyle_2.36.0</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
-<span><span class="co">#&gt;  [1] bit_4.6.0           gtable_0.3.6        jsonlite_2.0.0     </span></span>
-<span><span class="co">#&gt;  [4] crayon_1.5.3        compiler_4.5.1      BiocManager_1.30.26</span></span>
-<span><span class="co">#&gt;  [7] tidyselect_1.2.1    parallel_4.5.1      jquerylib_0.1.4    </span></span>
-<span><span class="co">#&gt; [10] systemfonts_1.2.3   scales_1.4.0        textshaping_1.0.1  </span></span>
-<span><span class="co">#&gt; [13] yaml_2.3.10         fastmap_1.2.0       R6_2.6.1           </span></span>
-<span><span class="co">#&gt; [16] labeling_0.4.3      generics_0.1.4      curl_7.0.0         </span></span>
-<span><span class="co">#&gt; [19] httr2_1.2.1         knitr_1.50          tibble_3.3.0       </span></span>
-<span><span class="co">#&gt; [22] bookdown_0.44       desc_1.4.3          tzdb_0.5.0         </span></span>
-<span><span class="co">#&gt; [25] bslib_0.9.0         pillar_1.11.0       RColorBrewer_1.1-3 </span></span>
-<span><span class="co">#&gt; [28] rlang_1.1.6         utf8_1.2.6          cachem_1.1.0       </span></span>
-<span><span class="co">#&gt; [31] xfun_0.53           fs_1.6.6            sass_0.4.10        </span></span>
-<span><span class="co">#&gt; [34] bit64_4.6.0-1       cli_3.6.5           withr_3.0.2        </span></span>
-<span><span class="co">#&gt; [37] pkgdown_2.1.3       magrittr_2.0.3      digest_0.6.37      </span></span>
-<span><span class="co">#&gt; [40] grid_4.5.1          vroom_1.6.5         rappdirs_0.3.3     </span></span>
-<span><span class="co">#&gt; [43] lifecycle_1.0.4     vctrs_0.6.5         evaluate_1.0.5     </span></span>
-<span><span class="co">#&gt; [46] glue_1.8.0          farver_2.1.2        ragg_1.4.0         </span></span>
-<span><span class="co">#&gt; [49] purrr_1.1.0         rmarkdown_2.29      tools_4.5.1        </span></span>
-<span><span class="co">#&gt; [52] pkgconfig_2.0.3     htmltools_0.5.8.1</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="conclusion">Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"></a>
