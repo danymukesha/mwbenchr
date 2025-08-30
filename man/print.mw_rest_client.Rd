@@ -2,15 +2,25 @@
 % Please edit documentation in R/client.R
 \name{print.mw_rest_client}
 \alias{print.mw_rest_client}
-\title{Print method for mw_rest_client}
+\title{Print method for \code{mw_rest_client} objects}
 \usage{
 \method{print}{mw_rest_client}(x, ...)
 }
 \arguments{
-\item{x}{An mw_rest_client object}
+\item{x}{An object of class \code{mw_rest_client}, as returned by
+\code{\link[=mw_rest_client]{mw_rest_client()}}.}
 
-\item{...}{Additional arguments (not used)}
+\item{...}{Additional arguments (currently unused).}
+}
+\value{
+Invisibly returns the \code{mw_rest_client} object passed as input.
+This is primarily called for its side effect (printing).
 }
 \description{
-Print method for mw_rest_client
+Displays a summary of the Metabolomics Workbench REST client configuration,
+including base URL, caching status, timeout, and cache directory if enabled.
+}
+\examples{
+client <- mw_rest_client(cache = TRUE, timeout = 15)
+print(client)
 }

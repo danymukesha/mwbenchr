@@ -14,8 +14,8 @@ the documentation.
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
+    collapse = TRUE,
+    comment = "#>"
 )
 ```
 
@@ -61,10 +61,10 @@ The result is returned as a data frame:
 
 ```{r search_studies_related_to_diabetes_in_human_blood}
 diabetes_studies <- search_metstat(
-  client,
-  species = "Human",
-  sample_source = "Blood",
-  disease = "Diabetes"
+    client,
+    species = "Human",
+    sample_source = "Blood",
+    disease = "Diabetes"
 )
 ```
 
@@ -74,6 +74,16 @@ Convert the result to a data frame and view:
 diabetes_df <- response_to_df(diabetes_studies)
 head(diabetes_df)
 ```
+
+<details>
+
+<summary>**Session Info**</summary>
+
+```{r sessioninfo}
+sessioninfo::session_info()
+```
+
+</details>
 
 ------------------------------------------------------------------------
 

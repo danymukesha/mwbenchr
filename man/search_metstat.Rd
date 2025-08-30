@@ -59,6 +59,12 @@ diabetes_studies <- search_metstat(client, disease = "Diabetes")
 
 # Search for studies containing specific metabolite
 glucose_studies <- search_metstat(client, refmet_name = "Glucose")
+
+#' # Search for human blood studies
+human_blood <- search_metstat(client,
+    species = "Human",
+    sample_source = "Blood"
+)
 }
 
 }

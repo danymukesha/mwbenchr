@@ -7,13 +7,14 @@
 list_endpoints(client)
 }
 \arguments{
-\item{client}{An mw_rest_client object (used for method dispatch)}
+\item{client}{An \code{mw_rest_client} object (not used internally;
+included for future extensibility)}
 }
 \value{
-Invisibly returns NULL (called for side effects)
+Invisibly returns \code{NULL}. Called for side effects.
 }
 \description{
-Display information about available endpoints in the mwbenchr package
+Displays available endpoints in the mwbenchr package,
 organized by functional category.
 }
 \examples{
@@ -21,5 +22,4 @@ organized by functional category.
 client <- mw_rest_client()
 list_endpoints(client)
 }
-
 }

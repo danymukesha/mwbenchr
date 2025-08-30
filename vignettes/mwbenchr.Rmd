@@ -28,11 +28,11 @@ abstract: Accessing and integrating data from the Metabolomics Workbench
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  eval = TRUE, # Set to FALSE to avoid API calls during package check
-  warning = FALSE,
-  message = FALSE
+    collapse = TRUE,
+    comment = "#>",
+    eval = TRUE, # Set to FALSE to avoid API calls during package check
+    warning = FALSE,
+    message = FALSE
 )
 ```
 
@@ -72,9 +72,9 @@ client <- mw_rest_client(cache = TRUE)
 
 # Custom client configuration
 client <- mw_rest_client(
-  cache = TRUE,
-  cache_dir = tempdir(),
-  timeout = 60
+    cache = TRUE,
+    cache_dir = tempdir(),
+    timeout = 60
 )
 
 # Basic client with default settings
@@ -110,14 +110,14 @@ colnames(all_studies)
 ```{r study-filtering}
 # Filter for human studies
 human_studies <- all_studies %>%
-  filter(grepl("Human", study_title, ignore.case = TRUE)) %>%
-  select(
-    study_id, study_title # , submit_date, last_modified
-  )
+    filter(grepl("Human", study_title, ignore.case = TRUE)) %>%
+    select(
+        study_id, study_title # , submit_date, last_modified
+    )
 
 # Look for specific topics
 diabetes_studies <- all_studies %>%
-  filter(grepl("diabetes|glucose", study_title, ignore.case = TRUE))
+    filter(grepl("diabetes|glucose", study_title, ignore.case = TRUE))
 
 print(paste("Found", nrow(diabetes_studies), "diabetes-related studies"))
 ```
@@ -149,15 +149,15 @@ criteria:
 ```{r metstat-search}
 # Search for human blood LCMS studies
 human_blood_lcms <- search_metstat(client,
-  analysis_type = "LCMS",
-  species = "Human",
-  sample_source = "Blood"
+    analysis_type = "LCMS",
+    species = "Human",
+    sample_source = "Blood"
 )
 
 # Search for mouse liver studies with any analytical method
 mouse_liver <- search_metstat(client,
-  species = "Mouse",
-  sample_source = "Liver"
+    species = "Mouse",
+    sample_source = "Liver"
 )
 
 # Search for studies containing specific metabolites
@@ -165,10 +165,10 @@ glucose_studies <- search_metstat(client, refmet_name = "Glucose")
 
 # Complex search combining multiple criteria
 complex_search <- search_metstat(client,
-  analysis_type = "LCMS",
-  polarity = "POSITIVE",
-  species = "Human",
-  sample_source = "Urine"
+    analysis_type = "LCMS",
+    polarity = "POSITIVE",
+    species = "Human",
+    sample_source = "Urine"
 )
 ```
 
@@ -233,28 +233,28 @@ Find compounds based on accurate mass measurements:
 ```{r mass-search}
 # Search in RefMet database
 mass_matches <- search_by_mass(client,
-  db = "REFMET",
-  mz = 180.063,
-  ion_type = "M+H",
-  tolerance = 0.01
+    db = "REFMET",
+    mz = 180.063,
+    ion_type = "M+H",
+    tolerance = 0.01
 )
 
 head(mass_matches)
 
 # Search in lipids database with different ion type
 lipid_matches <- search_by_mass(client,
-  db = "LIPIDS",
-  mz = 760.585,
-  ion_type = "M+H",
-  tolerance = 0.05
+    db = "LIPIDS",
+    mz = 760.585,
+    ion_type = "M+H",
+    tolerance = 0.05
 )
 
 # Compare results across databases
 mb_matches <- search_by_mass(client,
-  db = "MB",
-  mz = 180.063,
-  ion_type = "M+H",
-  tolerance = 0.01
+    db = "MB",
+    mz = 180.063,
+    ion_type = "M+H",
+    tolerance = 0.01
 )
 ```
 
@@ -273,8 +273,8 @@ pc_negative <- calculate_exact_mass(client, "PC(34:1)", "M-H")
 
 # Compare masses
 mass_comparison <- data.frame(
-  ion_type = c("M+H", "M+Na", "M-H"),
-  exact_mass = c(pc_mass$mz, pc_sodium$mz, pc_negative$mz)
+    ion_type = c("M+H", "M+Na", "M-H"),
+    exact_mass = c(pc_mass$mz, pc_sodium$mz, pc_negative$mz)
 )
 print(mass_comparison)
 ```
@@ -288,9 +288,9 @@ Here's a complete workflow for analyzing a metabolomics study:
 ```{r complete-workflow}
 # 1. Find relevant studies
 studies <- search_metstat(client,
-  analysis_type = "LCMS",
-  species = "Human",
-  sample_source = "Blood"
+    analysis_type = "LCMS",
+    species = "Human",
+    sample_source = "Blood"
 )
 
 # Select a study of interest
@@ -311,17 +311,18 @@ cat("Number of metabolites:", nrow(data_matrix), "\n")
 
 # 5. Data processing
 numeric_data <- data_matrix %>%
-  select(-c(study_id:units)) %>% # Remove metadata columns
-  mutate(across(everything(), as.numeric))
+    select(-c(study_id:units)) %>% # Remove metadata columns
+    mutate(across(everything(), as.numeric))
 
 # Calculate basic statistics
 metabolite_stats <- data_matrix %>%
-  select(metabolite_name, refmet_name) %>%
-  bind_cols(
-    mean_intensity = rowMeans(numeric_data, na.rm = TRUE),
-    cv = apply(numeric_data, 1, function(x) 
-        sd(x, na.rm = TRUE) / mean(x, na.rm = TRUE))
-  )
+    select(metabolite_name, refmet_name) %>%
+    bind_cols(
+        mean_intensity = rowMeans(numeric_data, na.rm = TRUE),
+        cv = apply(numeric_data, 1, function(x) {
+            sd(x, na.rm = TRUE) / mean(x, na.rm = TRUE)
+        })
+    )
 
 head(metabolite_stats)
 ```
@@ -337,29 +338,29 @@ study2_metabolites <- get_study_metabolites(client, "ST000002")
 
 # Combine and get unique names
 all_metabolite_names <- unique(c(
-  study1_metabolites$metabolite_name,
-  study2_metabolites$metabolite_name
+    study1_metabolites$metabolite_name,
+    study2_metabolites$metabolite_name
 ))
 
 # Standardize names (in practice, you'd do this in batches)
 standardized_names <- lapply(all_metabolite_names[1:5], function(name) {
-  tryCatch(
-    {
-      result <- standardize_to_refmet(client, name)
-      data.frame(
-        original_name = name,
-        refmet_name = result$refmet_name %||% NA,
-        stringsAsFactors = FALSE
-      )
-    },
-    error = function(e) {
-      data.frame(
-        original_name = name,
-        refmet_name = NA,
-        stringsAsFactors = FALSE
-      )
-    }
-  )
+    tryCatch(
+        {
+            result <- standardize_to_refmet(client, name)
+            data.frame(
+                original_name = name,
+                refmet_name = result$refmet_name %||% NA,
+                stringsAsFactors = FALSE
+            )
+        },
+        error = function(e) {
+            data.frame(
+                original_name = name,
+                refmet_name = NA,
+                stringsAsFactors = FALSE
+            )
+        }
+    )
 })
 
 standardization_results <- do.call(rbind, standardized_names)
@@ -375,13 +376,13 @@ Compare metabolite coverage across studies:
 studies_to_compare <- c("ST000001", "ST000002", "ST000003")
 
 metabolite_coverage <- lapply(studies_to_compare, function(study_id) {
-  metabolites <- get_study_metabolites(client, study_id)
-  data.frame(
-    study_id = study_id,
-    metabolite_count = nrow(metabolites),
-    unique_refmet = length(unique(metabolites$refmet_name)),
-    stringsAsFactors = FALSE
-  )
+    metabolites <- get_study_metabolites(client, study_id)
+    data.frame(
+        study_id = study_id,
+        metabolite_count = nrow(metabolites),
+        unique_refmet = length(unique(metabolites$refmet_name)),
+        stringsAsFactors = FALSE
+    )
 })
 
 coverage_df <- do.call(rbind, metabolite_coverage)
@@ -395,28 +396,28 @@ print(coverage_df)
 ```{r visualization, eval=FALSE}
 # Visualize study submission over time
 studies_with_dates <- all_studies %>%
-  filter(!is.na(submit_date)) %>%
-  mutate(
-    submit_year = as.numeric(format(as.Date(submit_date), "%Y")),
-    analysis_type = case_when(
-      grepl("LCMS", study_title, ignore.case = TRUE) ~ "LC-MS",
-      grepl("GCMS", study_title, ignore.case = TRUE) ~ "GC-MS",
-      grepl("NMR", study_title, ignore.case = TRUE) ~ "NMR",
-      TRUE ~ "Other"
-    )
-  ) %>%
-  filter(submit_year >= 2010 & submit_year <= 2023)
+    filter(!is.na(submit_date)) %>%
+    mutate(
+        submit_year = as.numeric(format(as.Date(submit_date), "%Y")),
+        analysis_type = case_when(
+            grepl("LCMS", study_title, ignore.case = TRUE) ~ "LC-MS",
+            grepl("GCMS", study_title, ignore.case = TRUE) ~ "GC-MS",
+            grepl("NMR", study_title, ignore.case = TRUE) ~ "NMR",
+            TRUE ~ "Other"
+        )
+    ) %>%
+    filter(submit_year >= 2010 & submit_year <= 2023)
 
 # Plot submissions by year and analysis type
 ggplot(studies_with_dates, aes(x = submit_year, fill = analysis_type)) +
-  geom_bar(position = "stack") +
-  labs(
-    title = "Metabolomics Workbench Study Submissions by Year",
-    x = "Submission Year",
-    y = "Number of Studies",
-    fill = "Analysis Type"
-  ) +
-  theme_minimal()
+    geom_bar(position = "stack") +
+    labs(
+        title = "Metabolomics Workbench Study Submissions by Year",
+        x = "Submission Year",
+        y = "Number of Studies",
+        fill = "Analysis Type"
+    ) +
+    theme_minimal()
 ```
 
 ## Mass Accuracy Visualization
@@ -427,26 +428,26 @@ tolerance_values <- c(0.001, 0.005, 0.01, 0.05, 0.1)
 target_mz <- 180.063
 
 mass_accuracy_results <- lapply(tolerance_values, function(tol) {
-  matches <- search_by_mass(client, "REFMET", target_mz, "M+H", tol)
-  data.frame(
-    tolerance = tol,
-    matches = nrow(matches),
-    stringsAsFactors = FALSE
-  )
+    matches <- search_by_mass(client, "REFMET", target_mz, "M+H", tol)
+    data.frame(
+        tolerance = tol,
+        matches = nrow(matches),
+        stringsAsFactors = FALSE
+    )
 })
 
 accuracy_df <- do.call(rbind, mass_accuracy_results)
 
 ggplot(accuracy_df, aes(x = tolerance, y = matches)) +
-  geom_line() +
-  geom_point() +
-  scale_x_log10() +
-  labs(
-    title = "Number of Mass Matches vs. Tolerance",
-    x = "Mass Tolerance (Da, log scale)",
-    y = "Number of Matches"
-  ) +
-  theme_minimal()
+    geom_line() +
+    geom_point() +
+    scale_x_log10() +
+    labs(
+        title = "Number of Mass Matches vs. Tolerance",
+        x = "Mass Tolerance (Da, log scale)",
+        y = "Number of Matches"
+    ) +
+    theme_minimal()
 ```
 
 # Error Handling and Best Practices
@@ -457,26 +458,28 @@ Making safely API calls with retries
 
 ```{r error-handling}
 safe_api_call <- function(func, ..., max_attempts = 3) {
-  for (attempt in 1:max_attempts) {
-    result <- tryCatch(
-      {
-        func(...)
-      },
-      error = function(e) {
-        if (attempt == max_attempts) {
-          stop("API call failed after ", max_attempts, " attempts: ", 
-               e$message)
-        }
-        message("Attempt ", attempt, " failed, retrying...")
-        Sys.sleep(1)
-        NULL
-      }
-    )
+    for (attempt in 1:max_attempts) {
+        result <- tryCatch(
+            {
+                func(...)
+            },
+            error = function(e) {
+                if (attempt == max_attempts) {
+                    stop(
+                        "API call failed after ", max_attempts, " attempts: ",
+                        e$message
+                    )
+                }
+                message("Attempt ", attempt, " failed, retrying...")
+                Sys.sleep(1)
+                NULL
+            }
+        )
 
-    if (!is.null(result)) {
-      return(result)
+        if (!is.null(result)) {
+            return(result)
+        }
     }
-  }
 }
 
 study_data <- safe_api_call(get_study_summary, client, "ST000001")
@@ -488,36 +491,36 @@ Processing multiple studies efficiently
 
 ```{r batch-processing}
 process_studies <- function(client, study_ids, max_concurrent = 5) {
-  results <- list()
+    results <- list()
 
-  for (i in seq_along(study_ids)) {
-    study_id <- study_ids[i]
+    for (i in seq_along(study_ids)) {
+        study_id <- study_ids[i]
 
-    cat("Processing study", i, "of", length(study_ids), ":", study_id, "\n")
+        cat("Processing study", i, "of", length(study_ids), ":", study_id, "\n")
 
-    tryCatch(
-      {
-        summary <- get_study_summary(client, study_id)
-        metabolites <- get_study_metabolites(client, study_id)
+        tryCatch(
+            {
+                summary <- get_study_summary(client, study_id)
+                metabolites <- get_study_metabolites(client, study_id)
 
-        results[[study_id]] <- list(
-          summary = summary,
-          metabolite_count = nrow(metabolites),
-          metabolites = metabolites$metabolite_name
+                results[[study_id]] <- list(
+                    summary = summary,
+                    metabolite_count = nrow(metabolites),
+                    metabolites = metabolites$metabolite_name
+                )
+
+                if (i %% max_concurrent == 0) {
+                    Sys.sleep(1)
+                }
+            },
+            error = function(e) {
+                warning("Failed to process study ", study_id, ": ", e$message)
+                results[[study_id]] <- list(error = e$message)
+            }
         )
+    }
 
-        if (i %% max_concurrent == 0) {
-          Sys.sleep(1)
-        }
-      },
-      error = function(e) {
-        warning("Failed to process study ", study_id, ": ", e$message)
-        results[[study_id]] <- list(error = e$message)
-      }
-    )
-  }
-
-  return(results)
+    return(results)
 }
 
 # simple usage (with a small subset)
@@ -532,10 +535,9 @@ batch_results <- process_studies(client, study_subset)
 ```{r caching, eval=FALSE}
 # set up caching for expensive operations
 cached_client <- mw_rest_client(
-  cache = TRUE,
-  cache_dir = file.path(tempdir(), "mwbenchr_cache")
+    cache = TRUE,
+    cache_dir = file.path(tempdir(), "mwbenchr_cache")
 )
-
 refmet_data <- get_all_refmet_names(cached_client) # Large dataset
 study_list <- get_study_summary(cached_client) # Frequently accessed
 
@@ -548,44 +550,48 @@ refmet_data_cached <- get_all_refmet_names(cached_client) # Fast!
 ```{r memory-management}
 # For large datasets, process in chunks
 process_large_study <- function(client, study_id) {
-  # Get metadata first (small)
-  summary <- get_study_summary(client, study_id)
-  metabolites <- get_study_metabolites(client, study_id)
+    # Get metadata first (small)
+    summary <- get_study_summary(client, study_id)
+    metabolites <- get_study_metabolites(client, study_id)
 
-  # Check data size before loading full matrix
-  n_metabolites <- nrow(metabolites)
+    # Check data size before loading full matrix
+    n_metabolites <- nrow(metabolites)
 
-  if (n_metabolites > 1000) {
-    warning(
-      "Large study detected (", n_metabolites, " metabolites). ",
-      "Consider processing in chunks."
-    )
-  }
+    if (n_metabolites > 1000) {
+        warning(
+            "Large study detected (", n_metabolites, " metabolites). ",
+            "Consider processing in chunks."
+        )
+    }
 
-  # Load full data only if reasonable size
-  if (n_metabolites <= 5000) {
-    data_matrix <- get_study_data(client, study_id)
-    return(list(
-      summary = summary,
-      metabolites = metabolites,
-      data = data_matrix
-    ))
-  } else {
-    return(list(
-      summary = summary,
-      metabolites = metabolites,
-      data = NULL,
-      note = "Data matrix too large - not loaded"
-    ))
-  }
+    # Load full data only if reasonable size
+    if (n_metabolites <= 5000) {
+        data_matrix <- get_study_data(client, study_id)
+        return(list(
+            summary = summary,
+            metabolites = metabolites,
+            data = data_matrix
+        ))
+    } else {
+        return(list(
+            summary = summary,
+            metabolites = metabolites,
+            data = NULL,
+            note = "Data matrix too large - not loaded"
+        ))
+    }
 }
 ```
 
-# Session Information
+<details>
 
-```{r session-info}
-sessionInfo()
+<summary>**Session Info**</summary>
+
+```{r sessioninfo}
+sessioninfo::session_info()
 ```
+
+</details>
 
 # Conclusion
 

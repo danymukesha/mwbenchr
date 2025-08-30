@@ -120,10 +120,23 @@ mw_request <- function(client, endpoint, parse = TRUE, format = NULL, ...) {
     )
 }
 
-#' Print method for mw_rest_client
-#' @param x An mw_rest_client object
-#' @param ... Additional arguments (not used)
+#' Print method for `mw_rest_client` objects
+#'
+#' Displays a summary of the Metabolomics Workbench REST client configuration,
+#' including base URL, caching status, timeout, and cache directory if enabled.
+#'
+#' @param x An object of class `mw_rest_client`, as returned by
+#' [mw_rest_client()].
+#' @param ... Additional arguments (currently unused).
+#'
+#' @return Invisibly returns the `mw_rest_client` object passed as input.
+#' This is primarily called for its side effect (printing).
+#'
 #' @export
+#'
+#' @examples
+#' client <- mw_rest_client(cache = TRUE, timeout = 15)
+#' print(client)
 print.mw_rest_client <- function(x, ...) {
     cat("Metabolomics Workbench REST Client\n")
     cat("  Base URL:", x$base_url, "\n")
@@ -132,4 +145,5 @@ print.mw_rest_client <- function(x, ...) {
     if (x$cache) {
         cat("  Cache directory:", x$cache_dir, "\n")
     }
+    invisible(x)
 }

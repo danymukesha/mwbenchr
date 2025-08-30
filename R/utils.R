@@ -64,11 +64,9 @@ response_to_df <- function(response) {
         return(tibble())
     }
 
-    # Handle named lists with Row pattern (search results)
     if (!is.null(names(response)) && all(grepl("^Row\\d+$", names(response)))) {
         return(
             map(response, function(x) {
-                # Replace NULL values with NA before converting to tibble
                 x <- modifyList(x, lapply(x, function(val) {
                     if (is.null(val)) NA else val
                 }))
@@ -78,11 +76,9 @@ response_to_df <- function(response) {
         )
     }
 
-    # Handle lists with DATA elements (metabolite entries)
     if (all(map_lgl(response, ~ is.list(.x) && "DATA" %in% names(.x)))) {
         return(
             map(response, function(x) {
-                # Replace NULLs in DATA elements with NA
                 x$DATA <- lapply(x$DATA, function(val) {
                     if (is.null(val)) NA else val
                 })
@@ -103,7 +99,6 @@ response_to_df <- function(response) {
     if (all(map_lgl(response, is.list))) {
         return(
             map(response, function(x) {
-                # Replace NULL values with NA before converting to tibble
                 x <- modifyList(x, lapply(x, function(val) {
                     if (is.null(val)) NA else val
                 }))
@@ -152,6 +147,7 @@ parse_mw_output <- function(result) {
     if (!is.character(result)) {
         stop("Input 'result' must be a character string.")
     }
+
     lines <- strsplit(result, "\n")[[1]]
     lines <- lines[lines != ""]
 
@@ -159,61 +155,67 @@ parse_mw_output <- function(result) {
     data_lines <- lines[-1]
 
     max_columns <- length(strsplit(header, "\t")[[1]])
-    data_lines_filtered <- data_lines[sapply(data_lines, function(x) {
+
+    data_lines_filtered <- data_lines[vapply(data_lines, function(x) {
         length(strsplit(x, "\t")[[1]]) == max_columns
-    })]
+    }, logical(1))]
 
     parsed_data <- vroom::vroom(I(paste(data_lines_filtered, collapse = "\n")),
         col_names = strsplit(header, "\t")[[1]],
         delim = "\t",
         show_col_types = FALSE
     )
+
     dplyr::as_tibble(parsed_data)
 }
 
+
 #' List available API endpoints
 #'
-#' Display information about available endpoints in the mwbenchr package
+#' Displays available endpoints in the mwbenchr package,
 #' organized by functional category.
 #'
-#' @param client An mw_rest_client object (used for method dispatch)
+#' @param client An `mw_rest_client` object (not used internally;
+#' included for future extensibility)
 #'
-#' @return Invisibly returns NULL (called for side effects)
+#' @return Invisibly returns `NULL`. Called for side effects.
 #'
 #' @examples
 #' \dontrun{
 #' client <- mw_rest_client()
 #' list_endpoints(client)
 #' }
-#'
 #' @export
 list_endpoints <- function(client) {
-    cat("Metabolomics Workbench REST API Endpoints\n")
-    cat("=========================================\n\n")
+    msg <- function(...) message(paste0(...))
 
-    cat("1. Compound Functions:\n")
-    cat("   get_compound_by_regno()        - Get compound by registry number\n")
-    cat("   get_compound_by_pubchem_cid()  - Get compound by PubChem CID\n")
-    cat("   get_compound_classification()  - Get compound classification\n")
-    cat("   download_compound_structure()  - Download structure files\n\n")
+    msg("Metabolomics Workbench REST API Endpoints")
+    msg("=========================================\n")
 
-    cat("2. Study Functions:\n")
-    cat("   get_study_summary()            - Get study metadata\n")
-    cat("   get_study_factors()            - Get experimental factors\n")
-    cat("   get_study_metabolites()        - Get study metabolite list\n")
-    cat("   get_study_data()               - Get study data matrix\n\n")
+    msg("1. Compound Functions:")
+    msg("  - get_compound_by_regno(): Get compound by registry number")
+    msg("  - get_compound_by_pubchem_cid(): Get compound by PubChem CID")
+    msg("  - get_compound_classification(): Get compound classification")
+    msg("  - download_compound_structure(): Download structure files\n")
 
-    cat("3. RefMet Functions:\n")
-    cat("   get_refmet_by_name()           - Get RefMet information\n")
-    cat("   standardize_to_refmet()        - Standardize metabolite names\n")
-    cat("   get_all_refmet_names()         - Get all RefMet names\n\n")
+    msg("2. Study Functions:")
+    msg("  - get_study_summary(): Get study metadata")
+    msg("  - get_study_factors(): Get experimental factors")
+    msg("  - get_study_metabolites(): Get study metabolite list")
+    msg("  - get_study_data(): Get study data matrix\n")
 
-    cat("4. Search Functions:\n")
-    cat("   search_metstat()               - Search studies by criteria\n")
-    cat("   search_by_mass()               - Search compounds by mass\n")
-    cat("   calculate_exact_mass()         - Calculate exact masses\n\n")
+    msg("3. RefMet Functions:")
+    msg("  - get_refmet_by_name(): Get RefMet information")
+    msg("  - standardize_to_refmet(): Standardize metabolite names")
+    msg("  - get_all_refmet_names(): Get all RefMet names\n")
 
-    cat("Use ?function_name for detailed help on any function.\n")
+    msg("4. Search Functions:")
+    msg("  - search_metstat(): Search studies by criteria")
+    msg("  - search_by_mass(): Search compounds by mass")
+    msg("  - calculate_exact_mass(): Calculate exact masses\n")
+
+    msg("Use ?function_name for detailed help on any function.\n")
+
     invisible(NULL)
 }
 

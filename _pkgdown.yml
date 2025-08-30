@@ -1,15 +1,8 @@
-# _pkgdown.yml
-
 title: mwbenchr
 url: https://danymukesha.github.io/mwbenchr
 
 template:
   bootstrap: 5
-
-home:
-  title: mwbenchr
-  sidebar:
-    structure: [links, license, community, citation]
 
 navbar:
   structure:

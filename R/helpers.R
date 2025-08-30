@@ -54,25 +54,25 @@ construct_url <- function(context, input_item, input_value, output_item,
     URLencode(url)
 }
 
-# fx to perform API request
-perform_request <- function(url, output_format = "json") {
-    req <- httr2::request(url) |>
-        httr2::req_user_agent("mwbenchr R package (v0.1.0)") |>
-        httr2::req_retry(max_tries = 3)
-
-    resp <- tryCatch(
-        httr2::req_perform(req),
-        error = function(e) stop("API request failed: ", e$message)
-    )
-
-    if (output_format == "txt") {
-        content <- httr2::resp_body_string(resp)
-        return(content)
-    } else if (output_format == "png") {
-        content <- httr2::resp_body_raw(resp)
-        return(content)
-    } else {
-        content <- httr2::resp_body_json(resp)
-        return(jsonlite::fromJSON(jsonlite::toJSON(content), flatten = TRUE))
-    }
-}
+# # fx to perform API request
+# perform_request <- function(url, output_format = "json") {
+#     req <- httr2::request(url) |>
+#         httr2::req_user_agent("mwbenchr R package (v0.0.1)") |>
+#         httr2::req_retry(max_tries = 3)
+#
+#     resp <- tryCatch(
+#         httr2::req_perform(req),
+#         error = function(e) stop("API request failed: ", e$message)
+#     )
+#
+#     if (output_format == "txt") {
+#         content <- httr2::resp_body_string(resp)
+#         return(content)
+#     } else if (output_format == "png") {
+#         content <- httr2::resp_body_raw(resp)
+#         return(content)
+#     } else {
+#         content <- httr2::resp_body_json(resp)
+#         return(jsonlite::fromJSON(jsonlite::toJSON(content), flatten = TRUE))
+#     }
+# }
