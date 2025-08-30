@@ -2,18 +2,26 @@
 % Please edit documentation in R/study.R
 \name{get_study_data}
 \alias{get_study_data}
-\title{Get study data}
+\title{Get study data matrix}
 \usage{
 get_study_data(client, study_id)
 }
 \arguments{
-\item{client}{mwREST client}
+\item{client}{An mw_rest_client object}
 
-\item{study_id}{Study ID}
+\item{study_id}{Character. Study ID}
 }
 \value{
-Study data
+Tibble containing the study data matrix
 }
 \description{
-Get study data
+Retrieve the complete data matrix for a specific study, including
+metabolite measurements across all samples.
+}
+\examples{
+\dontrun{
+client <- mw_rest_client()
+data_matrix <- get_study_data(client, "ST000001")
+}
+
 }

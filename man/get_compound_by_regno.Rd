@@ -7,17 +7,30 @@
 get_compound_by_regno(client, regno, fields = "all", format = "json")
 }
 \arguments{
-\item{client}{mwREST client}
+\item{client}{An mw_rest_client object}
 
-\item{regno}{Registry number}
+\item{regno}{Character or numeric. Registry number}
 
-\item{fields}{Fields to return (default: "all")}
+\item{fields}{Character. Fields to return (default: "all")}
 
-\item{format}{Output format ("json" or "txt")}
+\item{format}{Character. Output format ("json" or "txt")}
 }
 \value{
-Compound information
+Tibble with compound information (JSON) or character string (txt)
 }
 \description{
-Get compound information by registry number
+Retrieve detailed compound information using the Metabolomics Workbench
+registry number.
+}
+\examples{
+\dontrun{
+client <- mw_rest_client()
+
+# Get all fields for a compound
+compound_info <- get_compound_by_regno(client, "1")
+
+# Get only the name
+compound_name <- get_compound_by_regno(client, "1", fields = "name")
+}
+
 }

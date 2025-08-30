@@ -7,17 +7,24 @@
 get_compound_by_pubchem_cid(client, cid, fields = "all", format = "json")
 }
 \arguments{
-\item{client}{mwREST client}
+\item{client}{An mw_rest_client object}
 
-\item{cid}{PubChem CID}
+\item{cid}{Character or numeric. PubChem CID}
 
-\item{fields}{Fields to return (default: "all")}
+\item{fields}{Character. Fields to return (default: "all")}
 
-\item{format}{Output format ("json" or "txt")}
+\item{format}{Character. Output format ("json" or "txt")}
 }
 \value{
-Compound information
+Tibble with compound information (JSON) or character string (txt)
 }
 \description{
-Get compound information by PubChem CID
+Retrieve detailed compound information using a PubChem Compound ID.
+}
+\examples{
+\dontrun{
+client <- mw_rest_client()
+compound_info <- get_compound_by_pubchem_cid(client, "5793")
+}
+
 }

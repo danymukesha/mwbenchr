@@ -2,7 +2,7 @@
 % Please edit documentation in R/client.R
 \name{mw_rest_client}
 \alias{mw_rest_client}
-\title{Initialization of the Metabolomics Workbench REST client}
+\title{Initialize Metabolomics Workbench REST client}
 \usage{
 mw_rest_client(
   base_url = "https://www.metabolomicsworkbench.org/rest",
@@ -12,17 +12,35 @@ mw_rest_client(
 )
 }
 \arguments{
-\item{base_url}{Base URL for the API (defaults to production)}
+\item{base_url}{Character. Base URL for the API (defaults to production
+endpoint)}
 
-\item{cache}{Should responses be cached? (TRUE/FALSE)}
+\item{cache}{Logical. Should responses be cached? (default: FALSE)}
 
-\item{cache_dir}{Directory for cached responses}
+\item{cache_dir}{Character. Directory for cached responses (default:
+tempdir())}
 
-\item{timeout}{Request timeout in seconds}
+\item{timeout}{Numeric. Request timeout in seconds (default: 30)}
 }
 \value{
-An mwREST client object
+An S3 object of class "mw_rest_client"
 }
 \description{
-Initialization of the Metabolomics Workbench REST client
+Create a client object for interacting with the Metabolomics Workbench
+REST API.
+The client handles configuration for base URL, caching, and request
+timeouts.
+}
+\examples{
+\dontrun{
+# Create a client with default settings
+client <- mw_rest_client()
+
+# Create a client with caching enabled
+client <- mw_rest_client(cache = TRUE)
+
+# Create a client with custom timeout
+client <- mw_rest_client(timeout = 60)
+}
+
 }

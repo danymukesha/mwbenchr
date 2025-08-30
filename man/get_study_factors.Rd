@@ -2,18 +2,25 @@
 % Please edit documentation in R/study.R
 \name{get_study_factors}
 \alias{get_study_factors}
-\title{Get study factors}
+\title{Get study experimental factors}
 \usage{
 get_study_factors(client, study_id)
 }
 \arguments{
-\item{client}{mwREST client}
+\item{client}{An mw_rest_client object}
 
-\item{study_id}{Study ID}
+\item{study_id}{Character. Study ID}
 }
 \value{
-Study factors
+Tibble containing experimental factors
 }
 \description{
-Get study factors
+Retrieve the experimental factors (sample metadata) for a specific study.
+}
+\examples{
+\dontrun{
+client <- mw_rest_client()
+factors <- get_study_factors(client, "ST000001")
+}
+
 }

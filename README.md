@@ -1,16 +1,26 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# mwbenchr
+# mwbenchr <img src="man/figures/logo.png" align="right" height="139" />
 
 <!-- badges: start -->
 
+<!-- [![R-CMD-check](https://github.com/danymukesha/mwbenchr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/danymukesha/mwbenchr/actions/workflows/R-CMD-check.yaml) -->
+
+<!-- [![Codecov test coverage](https://codecov.io/gh/danymukesha/mwbenchr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/danymukesha/mwbenchr?branch=main) -->
+
+<!-- [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable) -->
+
+<!-- [![BioC status](https://bioconductor.org/shields/build/release/bioc/mwbenchr.svg)](https://bioconductor.org/checkResults/release/bioc-LATEST/mwbenchr) -->
+
+[![Codecov test
+coverage](https://codecov.io/gh/danymukesha/mwbenchr/graph/badge.svg)](https://app.codecov.io/gh/danymukesha/mwbenchr)
 <!-- badges: end -->
 
 Our mission:
 
-- **To cover all REST API endpoints** provided by the Metabolomics
-  Workbench.
+- **To cover all REST API endpoints** provided by the [Metabolomics
+  Workbench](https://www.metabolomicsworkbench.org/) REST API (v1.2).
 - **To ensure type safety** through strict validation of inputs and
   outputs.
 - **To deliver tidy outputs** as well-structured `data.frame`s ready for
@@ -21,6 +31,10 @@ Our mission:
   retry logic.
 - **To enhance user experience** with clear and informative API
   messages.
+
+**mwbenchr** enables programmatic access to metabolomics data, compound
+information, study metadata, and analytical tools from one of the
+largest metabolomics data repositories.
 
 Use-case:
 
@@ -36,45 +50,20 @@ client <- mw_rest_client()
 # Get compound information by PubChem CID
 compound <- get_compound_by_pubchem_cid(client, 5281365)
 head(compound)
-#> $pubchem_cid
-#> [1] "5281365"
-#> 
-#> $regno
-#> [1] "28467"
-#> 
-#> $formula
-#> [1] "C20H34O"
-#> 
-#> $exactmass
-#> [1] "290.260966"
-#> 
-#> $inchi_key
-#> [1] "OJISWRZIEWCUBN-QIRCYJPOSA-N"
-#> 
-#> $name
-#> [1] "Geranylgeraniol"
+#> # A tibble: 1 × 12
+#>   pubchem_cid regno formula exactmass  inchi_key    name  sys_name lm_id kegg_id
+#>   <chr>       <chr> <chr>   <chr>      <chr>        <chr> <chr>    <chr> <chr>  
+#> 1 5281365     28467 C20H34O 290.260966 OJISWRZIEWC… Gera… 3,7,11,… LMPR… C09094 
+#> # ℹ 3 more variables: chebi_id <chr>, metacyc_id <chr>, smiles <chr>
 
 ## ----study--------------------------------------------------------------------
 # Get study summary
 study <- get_study_summary(client, "ST000001")
 head(study)
-#> $study_id
-#> [1] "ST000001"
-#> 
-#> $study_title
-#> [1] "Fatb Induction Experiment (FatBIE)"
-#> 
-#> $species
-#> [1] "Arabidopsis thaliana"
-#> 
-#> $institute
-#> [1] "University of California, Davis"
-#> 
-#> $analysis_type
-#> [1] "GC-MS"
-#> 
-#> $number_of_samples
-#> [1] "24"
+#> # A tibble: 1 × 6
+#>   study_id study_title         species institute analysis_type number_of_samples
+#>   <chr>    <chr>               <chr>   <chr>     <chr>         <chr>            
+#> 1 ST000001 Fatb Induction Exp… Arabid… Universi… GC-MS         24
 
 ## ----metstat------------------------------------------------------------------
 # Search for diabetes studies in human blood
@@ -85,104 +74,107 @@ diabetes_studies <- search_metstat(
   disease = "Diabetes"
 )
 head(diabetes_studies)
-#> $Row1
-#> $Row1$study
-#> [1] "ST003671"
-#> 
-#> $Row1$study_title
-#> [1] "Discovery of Metabolic Biomarkers for Gestational Diabetes Mellitus: An In-Depth Metabolomics Investigation Utilizing Mass Spectrometry  "
-#> 
-#> $Row1$species
-#> [1] "Human"
-#> 
-#> $Row1$source
-#> [1] "Blood"
-#> 
-#> $Row1$disease
-#> [1] "Diabetes"
-#> 
-#> 
-#> $Row2
-#> $Row2$study
-#> [1] "ST003390"
-#> 
-#> $Row2$study_title
-#> [1] "In-depth profiling of biosignatures for Type 2 diabetes mellitus cohort utilizing an integrated targeted LC-MS platform"
-#> 
-#> $Row2$species
-#> [1] "Human"
-#> 
-#> $Row2$source
-#> [1] "Blood"
-#> 
-#> $Row2$disease
-#> [1] "Diabetes"
-#> 
-#> 
-#> $Row3
-#> $Row3$study
-#> [1] "ST002681"
-#> 
-#> $Row3$study_title
-#> [1] "Non-T2D vs T2D"
-#> 
-#> $Row3$species
-#> [1] "Human"
-#> 
-#> $Row3$source
-#> [1] "Blood"
-#> 
-#> $Row3$disease
-#> [1] "Diabetes"
-#> 
-#> 
-#> $Row4
-#> $Row4$study
-#> [1] "ST002496"
-#> 
-#> $Row4$study_title
-#> [1] "Study of environmental toxicants and gut microbiome in relation to obesity and insulin resistance"
-#> 
-#> $Row4$species
-#> [1] "Human"
-#> 
-#> $Row4$source
-#> [1] "Blood"
-#> 
-#> $Row4$disease
-#> [1] "Diabetes"
-#> 
-#> 
-#> $Row5
-#> $Row5$study
-#> [1] "ST001991"
-#> 
-#> $Row5$study_title
-#> [1] "Dynamics of bile acid metabolism between the host and gut microbiome in progression to islet autoimmunity (Blood)"
-#> 
-#> $Row5$species
-#> [1] "Human"
-#> 
-#> $Row5$source
-#> [1] "Blood"
-#> 
-#> $Row5$disease
-#> [1] "Diabetes"
-#> 
-#> 
-#> $Row6
-#> $Row6$study
-#> [1] "ST001948"
-#> 
-#> $Row6$study_title
-#> [1] "Metabolites Associated with Gestational Diabetes in Plasma"
-#> 
-#> $Row6$species
-#> [1] "Human"
-#> 
-#> $Row6$source
-#> [1] "Blood"
-#> 
-#> $Row6$disease
-#> [1] "Diabetes"
+#> # A tibble: 6 × 6
+#>   row_id study    study_title                             species source disease
+#>   <chr>  <chr>    <chr>                                   <chr>   <chr>  <chr>  
+#> 1 Row1   ST003897 Postprandial Plasma Lipidomic Changes … Human   Blood  Diabet…
+#> 2 Row2   ST003896 Postprandial Plasma Metabolomic Change… Human   Blood  Diabet…
+#> 3 Row3   ST003895 Postprandial Plasma Metabolomic Change… Human   Blood  Diabet…
+#> 4 Row4   ST003894 Postprandial Plasma Lipidomic Changes … Human   Blood  Diabet…
+#> 5 Row5   ST003671 Discovery of Metabolic Biomarkers for … Human   Blood  Diabet…
+#> 6 Row6   ST003636 Individual glycemic responses to carbo… Human   Blood  Diabet…
+```
+
+## All Features
+
+- **Study Access**: Retrieve study summaries, experimental factors,
+  metabolite lists, and complete data matrices
+- **Compound Information**: Access detailed compound data using registry
+  numbers or PubChem CIDs
+- **RefMet Integration**: Standardize metabolite names using RefMet
+  nomenclature
+- **Mass Spectrometry Tools**: Search compounds by mass and calculate
+  exact masses for lipids
+- **Flexible Search**: Find studies using multiple criteria (species,
+  sample type, analytical method)
+- **Built-in Caching**: Optional response caching for improved
+  performance
+- **Robust Error Handling**: Informative error messages and automatic
+  retries
+
+## Functions Implementation
+
+| Function Category | Functions | Description |
+|----|----|----|
+| **Client Setup** | `mw_rest_client()` | Initialize API client with configuration |
+| **Study Data** | `get_study_summary()`, `get_study_factors()`, `get_study_metabolites()`, `get_study_data()` | Access study information and data |
+| **Compound Info** | `get_compound_by_regno()`, `get_compound_by_pubchem_cid()`, `get_compound_classification()` | Retrieve compound details |
+| **RefMet** | `get_refmet_by_name()`, `standardize_to_refmet()`, `get_all_refmet_names()` | Work with standardized metabolite names |
+| **Search** | `search_metstat()`, `search_by_mass()` | Find studies and compounds |
+| **Mass Spec** | `calculate_exact_mass()` | Calculate exact masses for lipids |
+| **Utilities** | `response_to_df()`, `list_endpoints()` | Data processing and help |
+
+## Quick Start
+
+``` r
+library(mwbenchr)
+
+# Initialize client
+client <- mw_rest_client()
+
+# Get all available studies
+studies <- get_study_summary(client)
+head(studies)
+
+# Get compound information
+glucose <- get_compound_by_regno(client, "1")
+
+# Search for human blood studies
+human_blood <- search_metstat(client, 
+                             species = "Human", 
+                             sample_source = "Blood")
+
+# Standardize metabolite names
+standardized <- standardize_to_refmet(client, "glucose")
+```
+
+## Advanced Usage
+
+### Enable Caching for Better Performance
+
+``` r
+# Enable caching for repeated queries
+client <- mw_rest_client(cache = TRUE, cache_dir = "~/.mwbenchr_cache")
+
+# This will be cached
+refmet_names <- get_all_refmet_names(client)
+```
+
+### Search with Multiple Criteria
+
+``` r
+# Find LCMS studies of mouse liver samples
+mouse_liver <- search_metstat(client,
+                             analysis_type = "LCMS",
+                             species = "Mouse",
+                             sample_source = "Liver")
+
+# Search for diabetes-related studies with specific metabolite
+diabetes_glucose <- search_metstat(client,
+                                  disease = "Diabetes",
+                                  refmet_name = "Glucose")
+```
+
+### Mass Spectrometry Workflows
+
+``` r
+# Search for compounds by accurate mass
+matches <- search_by_mass(client,
+                         db = "REFMET",
+                         mz = 180.063,
+                         ion_type = "M+H",
+                         tolerance = 0.01)
+
+# Calculate exact mass for lipid
+pc_mass <- calculate_exact_mass(client, "PC(34:1)", "M+H")
 ```

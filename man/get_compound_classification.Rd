@@ -2,20 +2,28 @@
 % Please edit documentation in R/compound.R
 \name{get_compound_classification}
 \alias{get_compound_classification}
-\title{Get compound classification by identifier}
+\title{Get compound classification hierarchy}
 \usage{
 get_compound_classification(client, id_type, id_value)
 }
 \arguments{
-\item{client}{mwREST client}
+\item{client}{An mw_rest_client object}
 
-\item{id_type}{Identifier type ("regno", "pubchem_cid", etc.)}
+\item{id_type}{Character. Identifier type ("regno", "pubchem_cid", etc.)}
 
-\item{id_value}{Identifier value}
+\item{id_value}{Character or numeric. Identifier value}
 }
 \value{
-Classification hierarchy
+Tibble containing classification hierarchy
 }
 \description{
-Get compound classification by identifier
+Retrieve the taxonomic classification hierarchy for a compound using
+various identifier types.
+}
+\examples{
+\dontrun{
+client <- mw_rest_client()
+classification <- get_compound_classification(client, "regno", "1")
+}
+
 }

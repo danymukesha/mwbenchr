@@ -7,11 +7,20 @@
 get_all_refmet_names(client)
 }
 \arguments{
-\item{client}{mwREST client}
+\item{client}{An mw_rest_client object}
 }
 \value{
-All RefMet names
+Tibble containing all RefMet names
 }
 \description{
-Get all RefMet names
+Retrieve the complete list of standardized metabolite names from RefMet.
+This can be large, so consider using caching.
+}
+\examples{
+\dontrun{
+# Use caching for this large dataset
+client <- mw_rest_client(cache = TRUE)
+all_names <- get_all_refmet_names(client)
+}
+
 }

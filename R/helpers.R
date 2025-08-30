@@ -57,7 +57,7 @@ construct_url <- function(context, input_item, input_value, output_item,
 # fx to perform API request
 perform_request <- function(url, output_format = "json") {
     req <- httr2::request(url) |>
-        httr2::req_user_agent("MWREST R package (v0.1.0)") |>
+        httr2::req_user_agent("mwbenchr R package (v0.1.0)") |>
         httr2::req_retry(max_tries = 3)
 
     resp <- tryCatch(

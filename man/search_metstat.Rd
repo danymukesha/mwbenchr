@@ -17,27 +17,48 @@ search_metstat(
 )
 }
 \arguments{
-\item{client}{mwREST client}
+\item{client}{An mw_rest_client object}
 
-\item{analysis_type}{Analysis type (e.g., "LCMS", "GCMS")}
+\item{analysis_type}{Character. Analysis type (e.g., "LCMS", "GCMS", "NMR")}
 
-\item{polarity}{Polarity (e.g., "POSITIVE", "NEGATIVE")}
+\item{polarity}{Character. Ionization polarity ("POSITIVE", "NEGATIVE")}
 
-\item{chromatography}{Chromatography method (e.g., "HILIC", "RP")}
+\item{chromatography}{Character. Chromatography method (e.g., "HILIC", "RP")}
 
-\item{species}{Species (e.g., "Human", "Mouse")}
+\item{species}{Character. Species name (e.g., "Human", "Mouse", "Rat")}
 
-\item{sample_source}{Sample source (e.g., "Blood", "Urine")}
+\item{sample_source}{Character. Sample type (e.g., "Blood", "Urine",
+"Tissue")}
 
-\item{disease}{Disease association (e.g., "Diabetes")}
+\item{disease}{Character. Disease or condition}
 
-\item{kegg_id}{KEGG ID (e.g., "C00002")}
+\item{kegg_id}{Character. KEGG compound ID (e.g., "C00002")}
 
-\item{refmet_name}{RefMet name (e.g., "Cholesterol")}
+\item{refmet_name}{Character. RefMet standardized metabolite name}
 }
 \value{
-Matching studies
+Tibble containing matching studies with metadata
 }
 \description{
-Search studies using MetStat criteria
+Search for studies in the Metabolomics Workbench database using multiple
+criteria including analysis type, species, sample source, and disease.
+}
+\examples{
+\dontrun{
+client <- mw_rest_client()
+
+# Search for human blood LCMS studies
+studies <- search_metstat(client,
+    analysis_type = "LCMS",
+    species = "Human",
+    sample_source = "Blood"
+)
+
+# Search for diabetes-related studies
+diabetes_studies <- search_metstat(client, disease = "Diabetes")
+
+# Search for studies containing specific metabolite
+glucose_studies <- search_metstat(client, refmet_name = "Glucose")
+}
+
 }

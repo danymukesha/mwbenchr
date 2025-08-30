@@ -4,24 +4,54 @@
 \alias{search_by_mass}
 \title{Search compounds by mass}
 \usage{
-search_by_mass(client, db, mz, ion_type, tolerance, format = "json")
+search_by_mass(
+  client,
+  db,
+  mz,
+  ion_type,
+  tolerance,
+  format = "application/json"
+)
 }
 \arguments{
-\item{client}{mwREST client}
+\item{client}{An mw_rest_client object}
 
-\item{db}{Database ("MB", "LIPIDS", or "REFMET")}
+\item{db}{Character. Database to search ("MB", "LIPIDS", or "REFMET")}
 
-\item{mz}{Mass-to-charge ratio}
+\item{mz}{Numeric. Mass-to-charge ratio}
 
-\item{ion_type}{Ion type (e.g., "M+H", "M-H")}
+\item{ion_type}{Character. Ion type (e.g., "M+H", "M-H", "M+Na")}
 
-\item{tolerance}{Mass tolerance in Daltons}
+\item{tolerance}{Numeric. Mass tolerance in Daltons}
 
-\item{format}{Output format ("json" or "txt")}
+\item{format}{Character. Output format ("json" or "txt")}
 }
 \value{
-Matching compounds
+Tibble containing matching compounds(JSON) or character string(txt)
 }
 \description{
-Search compounds by mass
+Search for compounds in specified databases using mass-to-charge ratio,
+ion type, and mass tolerance.
+}
+\examples{
+\dontrun{
+client <- mw_rest_client()
+
+# Search for compounds with specific m/z
+matches <- search_by_mass(client,
+    db = "REFMET",
+    mz = 180.063,
+    ion_type = "M+H",
+    tolerance = 0.01
+)
+
+# Search in lipids database
+lipid_matches <- search_by_mass(client,
+    db = "LIPIDS",
+    mz = 760.585,
+    ion_type = "M+H",
+    tolerance = 0.05
+)
+}
+
 }

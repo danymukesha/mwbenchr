@@ -2,16 +2,28 @@
 % Please edit documentation in R/utils.R
 \name{flatten_entry}
 \alias{flatten_entry}
-\title{Flatten a single metabolite entry (with nested DATA field)}
+\title{Flatten a metabolite entry with nested sample data}
 \usage{
 flatten_entry(entry)
 }
 \arguments{
-\item{entry}{A list of metabolite metadata and nested sample data}
+\item{entry}{List. A metabolite entry with metadata and DATA field}
 }
 \value{
-A single-row tibble
+A tibble with flattened metabolite and sample data
 }
 \description{
-Flatten a single metabolite entry (with nested DATA field)
+Converts a single metabolite entry containing metadata and nested DATA field
+into a flat tibble structure suitable for analysis.
+}
+\examples{
+\dontrun{
+entry <- list(
+    study_id = "ST001",
+    metabolite_name = "Glucose",
+    DATA = data.frame(sample1 = 100, sample2 = 150)
+)
+flatten_entry(entry)
+}
+
 }

@@ -1,11 +1,13 @@
 ---
-title: "introduction"
+title: "Hands-On mwbenchr"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{introduction}
+  %\VignetteIndexEntry{Hands-On mwbenchr}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+
+This short guide provides a quick overview of the core functions to use the `mwbenchr` package to interact with mass spectrometry and study data. For a complete tutorial, refer to the **Getting Started** section of the documentation.
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -14,18 +16,26 @@ knitr::opts_chunk$set(
 )
 ```
 
+First, load the `mwbenchr` package:
+
 ```{r library}
 library(mwbenchr)
 ```
+
+Create a client to interact with the API:
 
 ```{r initialize_client}
 client <- mw_rest_client()
 ```
 
+Fetch compound information by providing its PubChem CID. Here, we use CID `5281365` as an example:
+
 ```{r get_compound_client}
 compound <- get_compound_by_pubchem_cid(client, 5281365)
 print(compound)
 ```
+
+Retrieve data from a study by providing its study ID (e.g., `"ST000001"`). Convert the response into a data frame:
 
 ```{r get_study_data}
 study_data <- get_study_data(client, "ST000001")
@@ -33,11 +43,15 @@ study_df <- response_to_df(study_data)
 head(study_df)
 ```
 
+If you want to search for compounds based on their mass (optional):
+
 ```{r search_compounds_by_mass, include=FALSE, eval=FALSE}
 mass_results <- search_by_mass(client, "MB", 255.2, "M+H", 0.2)
 mass_df <- response_to_df(mass_results)
 head(mass_df)
 ```
+
+Search for studies related to **Diabetes** in **Human** blood samples. The result is returned as a data frame:
 
 ```{r search_studies_related_to_diabetes_in_human_blood}
 diabetes_studies <- search_metstat(
@@ -48,7 +62,15 @@ diabetes_studies <- search_metstat(
 )
 ```
 
+Convert the result to a data frame and view:
+
 ```{r convert_to_data_frame_and_view}
 diabetes_df <- response_to_df(diabetes_studies)
 head(diabetes_df)
 ```
+
+------------------------------------------------------------------------
+
+Here, we covered just fundamental implemented methods in the `mwbenchr` package, including how to interact with compound and study data, as well as how to search for mass spectrometry-related compounds and studies.
+
+For more detailed examples and additional functions, please refer to the Getting Started section in the vignette, which covers the full tutorial.For more detailed examples and additional functions, please refer to the **Getting Started** of the package, which covers the full tutorial.

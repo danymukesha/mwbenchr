@@ -1,0 +1,610 @@
+---
+title: "Getting Started with {mwbenchr}"
+author: "Dany Mukesha"
+date: "`r Sys.Date()`"
+output:
+    BiocStyle::html_document:
+    toc: true
+toc_float: true
+toc_depth: 3
+number_sections: true
+vignette: >
+    %\VignetteIndexEntry{Getting Started}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
+editor_options: 
+    markdown: 
+        wrap: 72
+abstract: Accessing and integrating data from the Metabolomics Workbench 
+    (MW) is often cumbersome with the existing tools. This interface
+    simplifies programmatic access to MW’s REST API, enabling efficient
+    retrieval of study metadata, sample information, and compound
+    annotations. By integrating MW’s extensive datasets with R, it enhances
+    data exploration, reproducibility, and seamless integration into
+    bioinformatics workflows. This tool provides a streamlined approach for
+    the users in metabolomics and systems biology to analyze large-scale
+    metabolomics data with ease.
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = TRUE, # Set to FALSE to avoid API calls during package check
+  warning = FALSE,
+  message = FALSE
+)
+```
+
+# Introduction
+
+The **mwbenchr** package provides a R interface to the Metabolomics
+Workbench REST API, enabling programmatic access to one of the largest
+metabolomics data repositories. This vignette demonstrates how to use
+mwbenchr to retrieve study data, compound information, and perform
+common metabolomics data analysis tasks.
+
+## What is Metabolomics Workbench?
+
+The [Metabolomics Workbench](https://www.metabolomicsworkbench.org/) is
+a public repository for metabolomics data, metadata, and analysis tools.
+It contains thousands of studies across various species, sample types,
+and analytical platforms, making it an invaluable resource for
+metabolomics research.
+
+# Getting Started
+
+## Set-up libraries 
+
+```{r setup}
+library(mwbenchr)
+library(dplyr)
+library(ggplot2)
+```
+
+## Creating a Client
+
+All interactions with the API begin by creating a client object:
+
+```{r client-setup}
+# Caching enabled client (recommended for repeated queries: enable caching)
+client <- mw_rest_client(cache = TRUE)
+
+# Custom client configuration
+client <- mw_rest_client(
+  cache = TRUE,
+  cache_dir = tempdir(),
+  timeout = 60
+)
+
+# Basic client with default settings
+client <- mw_rest_client()
+
+client
+```
+
+## Exploring Available Endpoints
+
+Get an overview of available functions:
+
+```{r endpoints}
+list_endpoints(client)
+```
+
+# Working with Studies
+
+## Discovering Studies
+
+Start by getting an overview of available studies:
+
+```{r study-overview}
+# Obtain all studies (this returns a lot of data)
+all_studies <- get_study_summary(client)
+
+head(all_studies, 3)
+colnames(all_studies)
+```
+
+## Filtering and Exploring Studies
+
+```{r study-filtering}
+# Filter for human studies
+human_studies <- all_studies %>%
+  filter(grepl("Human", study_title, ignore.case = TRUE)) %>%
+  select(
+    study_id, study_title # , submit_date, last_modified
+  )
+
+# Look for specific topics
+diabetes_studies <- all_studies %>%
+  filter(grepl("diabetes|glucose", study_title, ignore.case = TRUE))
+
+print(paste("Found", nrow(diabetes_studies), "diabetes-related studies"))
+```
+
+## Getting Detailed Study Information
+
+Once you've identified studies of interest, get detailed information:
+
+```{r study-details}
+# Get experimental factors (sample metadata) for a study
+study_id <- "ST000001"
+factors <- get_study_factors(client, study_id)
+head(factors)
+
+# Obtain the list of metabolites measured
+metabolites <- get_study_metabolites(client, study_id)
+head(metabolites)
+
+# The complete data matrix
+study_data <- get_study_data(client, study_id)
+dim(study_data)
+```
+
+# Advanced Study Search with MetStat
+
+The MetStat functionality allows sophisticated searching across multiple
+criteria:
+
+```{r metstat-search}
+# Search for human blood LCMS studies
+human_blood_lcms <- search_metstat(client,
+  analysis_type = "LCMS",
+  species = "Human",
+  sample_source = "Blood"
+)
+
+# Search for mouse liver studies with any analytical method
+mouse_liver <- search_metstat(client,
+  species = "Mouse",
+  sample_source = "Liver"
+)
+
+# Search for studies containing specific metabolites
+glucose_studies <- search_metstat(client, refmet_name = "Glucose")
+
+# Complex search combining multiple criteria
+complex_search <- search_metstat(client,
+  analysis_type = "LCMS",
+  polarity = "POSITIVE",
+  species = "Human",
+  sample_source = "Urine"
+)
+```
+
+# Working with Compounds
+
+## Retrieving Compound Information
+
+Get detailed information about specific compounds:
+
+```{r compound-info}
+# Get compound by registry number
+compound_1 <- get_compound_by_regno(client, "1")
+print(compound_1$systematic_name)
+
+# Get compound by PubChem CID
+glucose_pubchem <- get_compound_by_pubchem_cid(client, "5793")
+
+# Get specific fields only
+compound_name <- get_compound_by_regno(client, "1", fields = "name")
+
+# Get classification hierarchy
+classification <- get_compound_classification(client, "regno", "1")
+head(classification)
+```
+
+## Downloading Structure Files
+
+```{r structure-files}
+# Download MOL file
+mol_content <- download_compound_structure(client, "regno", "1", "molfile")
+
+# Save to file
+# writeLines(mol_content, "glucose.mol")
+
+# Download SDF format
+sdf_content <- download_compound_structure(client, "regno", "1", "sdf")
+```
+
+# RefMet Integration
+
+RefMet provides standardized metabolite nomenclature:
+
+```{r refmet}
+# Get RefMet information for a metabolite
+glucose_refmet <- get_refmet_by_name(client, "Glucose")
+
+# Standardize alternative names
+standardized <- standardize_to_refmet(client, "D-glucose")
+print(standardized$refmet_name)
+
+# Get all RefMet names (large dataset - use caching!)
+client_cached <- mw_rest_client(cache = TRUE)
+# all_refmet <- get_all_refmet_names(client_cached)
+```
+
+# Mass Spectrometry Tools
+
+## Searching by Mass
+
+Find compounds based on accurate mass measurements:
+
+```{r mass-search}
+# Search in RefMet database
+mass_matches <- search_by_mass(client,
+  db = "REFMET",
+  mz = 180.063,
+  ion_type = "M+H",
+  tolerance = 0.01
+)
+
+head(mass_matches)
+
+# Search in lipids database with different ion type
+lipid_matches <- search_by_mass(client,
+  db = "LIPIDS",
+  mz = 760.585,
+  ion_type = "M+H",
+  tolerance = 0.05
+)
+
+# Compare results across databases
+mb_matches <- search_by_mass(client,
+  db = "MB",
+  mz = 180.063,
+  ion_type = "M+H",
+  tolerance = 0.01
+)
+```
+
+## Calculating Exact Masses
+
+Calculate theoretical masses for lipid species:
+
+```{r exact-mass}
+# Calculate exact mass for phosphatidylcholine
+pc_mass <- calculate_exact_mass(client, "PC(34:1)", "M+H")
+print(paste("PC(34:1) [M+H]+ =", pc_mass$mz))
+
+# Different ion types
+pc_sodium <- calculate_exact_mass(client, "PC(34:1)", "M+Na")
+pc_negative <- calculate_exact_mass(client, "PC(34:1)", "M-H")
+
+# Compare masses
+mass_comparison <- data.frame(
+  ion_type = c("M+H", "M+Na", "M-H"),
+  exact_mass = c(pc_mass$mz, pc_sodium$mz, pc_negative$mz)
+)
+print(mass_comparison)
+```
+
+# Data Integration and Analysis Workflows
+
+## Complete Metabolomics Study Analysis
+
+Here's a complete workflow for analyzing a metabolomics study:
+
+```{r complete-workflow}
+# 1. Find relevant studies
+studies <- search_metstat(client,
+  analysis_type = "LCMS",
+  species = "Human",
+  sample_source = "Blood"
+)
+
+# Select a study of interest
+target_study <- studies$study[1]
+
+# 2. Get study metadata
+study_info <- get_study_summary(client, target_study)
+factors <- get_study_factors(client, target_study)
+metabolites <- get_study_metabolites(client, target_study)
+
+# 3. Get the data matrix
+data_matrix <- get_study_data(client, target_study)
+
+# 4. Basic data exploration
+cat("Study:", study_info$study_title, "\n")
+cat("Number of samples:", ncol(data_matrix) - 7, "\n") # Subtract metadata columns
+cat("Number of metabolites:", nrow(data_matrix), "\n")
+
+# 5. Data processing
+numeric_data <- data_matrix %>%
+  select(-c(study_id:units)) %>% # Remove metadata columns
+  mutate(across(everything(), as.numeric))
+
+# Calculate basic statistics
+metabolite_stats <- data_matrix %>%
+  select(metabolite_name, refmet_name) %>%
+  bind_cols(
+    mean_intensity = rowMeans(numeric_data, na.rm = TRUE),
+    cv = apply(numeric_data, 1, function(x) sd(x, na.rm = TRUE) / mean(x, na.rm = TRUE))
+  )
+
+head(metabolite_stats)
+```
+
+## Standardizing Metabolite Names
+
+Standardize metabolite names across different studies:
+
+```{r name-standardization}
+# Get metabolites from multiple studies
+study1_metabolites <- get_study_metabolites(client, "ST000001")
+study2_metabolites <- get_study_metabolites(client, "ST000002")
+
+# Combine and get unique names
+all_metabolite_names <- unique(c(
+  study1_metabolites$metabolite_name,
+  study2_metabolites$metabolite_name
+))
+
+# Standardize names (in practice, you'd do this in batches)
+standardized_names <- lapply(all_metabolite_names[1:5], function(name) {
+  tryCatch(
+    {
+      result <- standardize_to_refmet(client, name)
+      data.frame(
+        original_name = name,
+        refmet_name = result$refmet_name %||% NA,
+        stringsAsFactors = FALSE
+      )
+    },
+    error = function(e) {
+      data.frame(
+        original_name = name,
+        refmet_name = NA,
+        stringsAsFactors = FALSE
+      )
+    }
+  )
+})
+
+standardization_results <- do.call(rbind, standardized_names)
+print(standardization_results)
+```
+
+## Cross-Study Comparisons
+
+Compare metabolite coverage across studies:
+
+```{r cross-study}
+# Get metabolites from multiple studies
+studies_to_compare <- c("ST000001", "ST000002", "ST000003")
+
+metabolite_coverage <- lapply(studies_to_compare, function(study_id) {
+  metabolites <- get_study_metabolites(client, study_id)
+  data.frame(
+    study_id = study_id,
+    metabolite_count = nrow(metabolites),
+    unique_refmet = length(unique(metabolites$refmet_name)),
+    stringsAsFactors = FALSE
+  )
+})
+
+coverage_df <- do.call(rbind, metabolite_coverage)
+print(coverage_df)
+```
+
+# Visualization Examples
+
+## Study Statistics
+
+```{r visualization, eval=FALSE}
+# Visualize study submission over time
+studies_with_dates <- all_studies %>%
+  filter(!is.na(submit_date)) %>%
+  mutate(
+    submit_year = as.numeric(format(as.Date(submit_date), "%Y")),
+    analysis_type = case_when(
+      grepl("LCMS", study_title, ignore.case = TRUE) ~ "LC-MS",
+      grepl("GCMS", study_title, ignore.case = TRUE) ~ "GC-MS",
+      grepl("NMR", study_title, ignore.case = TRUE) ~ "NMR",
+      TRUE ~ "Other"
+    )
+  ) %>%
+  filter(submit_year >= 2010 & submit_year <= 2023)
+
+# Plot submissions by year and analysis type
+ggplot(studies_with_dates, aes(x = submit_year, fill = analysis_type)) +
+  geom_bar(position = "stack") +
+  labs(
+    title = "Metabolomics Workbench Study Submissions by Year",
+    x = "Submission Year",
+    y = "Number of Studies",
+    fill = "Analysis Type"
+  ) +
+  theme_minimal()
+```
+
+## Mass Accuracy Visualization
+
+```{r mass-accuracy}
+# Compare mass accuracy across different tolerances
+tolerance_values <- c(0.001, 0.005, 0.01, 0.05, 0.1)
+target_mz <- 180.063
+
+mass_accuracy_results <- lapply(tolerance_values, function(tol) {
+  matches <- search_by_mass(client, "REFMET", target_mz, "M+H", tol)
+  data.frame(
+    tolerance = tol,
+    matches = nrow(matches),
+    stringsAsFactors = FALSE
+  )
+})
+
+accuracy_df <- do.call(rbind, mass_accuracy_results)
+
+ggplot(accuracy_df, aes(x = tolerance, y = matches)) +
+  geom_line() +
+  geom_point() +
+  scale_x_log10() +
+  labs(
+    title = "Number of Mass Matches vs. Tolerance",
+    x = "Mass Tolerance (Da, log scale)",
+    y = "Number of Matches"
+  ) +
+  theme_minimal()
+```
+
+# Error Handling and Best Practices
+
+## Robust API Calls
+
+Making safely API calls with retries
+
+```{r error-handling}
+safe_api_call <- function(func, ..., max_attempts = 3) {
+  for (attempt in 1:max_attempts) {
+    result <- tryCatch(
+      {
+        func(...)
+      },
+      error = function(e) {
+        if (attempt == max_attempts) {
+          stop("API call failed after ", max_attempts, " attempts: ", e$message)
+        }
+        message("Attempt ", attempt, " failed, retrying...")
+        Sys.sleep(1)
+        NULL
+      }
+    )
+
+    if (!is.null(result)) {
+      return(result)
+    }
+  }
+}
+
+study_data <- safe_api_call(get_study_summary, client, "ST000001")
+```
+
+## Batch Processing
+
+Processing multiple studies efficiently
+
+```{r batch-processing}
+process_studies <- function(client, study_ids, max_concurrent = 5) {
+  results <- list()
+
+  for (i in seq_along(study_ids)) {
+    study_id <- study_ids[i]
+
+    cat("Processing study", i, "of", length(study_ids), ":", study_id, "\n")
+
+    tryCatch(
+      {
+        summary <- get_study_summary(client, study_id)
+        metabolites <- get_study_metabolites(client, study_id)
+
+        results[[study_id]] <- list(
+          summary = summary,
+          metabolite_count = nrow(metabolites),
+          metabolites = metabolites$metabolite_name
+        )
+
+        if (i %% max_concurrent == 0) {
+          Sys.sleep(1)
+        }
+      },
+      error = function(e) {
+        warning("Failed to process study ", study_id, ": ", e$message)
+        results[[study_id]] <- list(error = e$message)
+      }
+    )
+  }
+
+  return(results)
+}
+
+# simple usage (with a small subset)
+study_subset <- all_studies$study_id[1:3]
+batch_results <- process_studies(client, study_subset)
+```
+
+# Performance Optimization
+
+## Using Caching
+
+```{r caching, eval=FALSE}
+# set up caching for expensive operations
+cached_client <- mw_rest_client(
+  cache = TRUE,
+  cache_dir = file.path(tempdir(), "mwbenchr_cache")
+)
+
+refmet_data <- get_all_refmet_names(cached_client) # Large dataset
+study_list <- get_study_summary(cached_client) # Frequently accessed
+
+# subsequent calls will use cached data
+refmet_data_cached <- get_all_refmet_names(cached_client) # Fast!
+```
+
+## Memory Management
+
+```{r memory-management}
+# For large datasets, process in chunks
+process_large_study <- function(client, study_id) {
+  # Get metadata first (small)
+  summary <- get_study_summary(client, study_id)
+  metabolites <- get_study_metabolites(client, study_id)
+
+  # Check data size before loading full matrix
+  n_metabolites <- nrow(metabolites)
+
+  if (n_metabolites > 1000) {
+    warning(
+      "Large study detected (", n_metabolites, " metabolites). ",
+      "Consider processing in chunks."
+    )
+  }
+
+  # Load full data only if reasonable size
+  if (n_metabolites <= 5000) {
+    data_matrix <- get_study_data(client, study_id)
+    return(list(
+      summary = summary,
+      metabolites = metabolites,
+      data = data_matrix
+    ))
+  } else {
+    return(list(
+      summary = summary,
+      metabolites = metabolites,
+      data = NULL,
+      note = "Data matrix too large - not loaded"
+    ))
+  }
+}
+```
+
+# Session Information
+
+```{r session-info}
+sessionInfo()
+```
+
+# Conclusion
+
+We demonstrated the key functionality of `mwbenchr` for accessing and
+analyzing metabolomics data from the Metabolomics Workbench.
+
+Here are some key takeaways:
+
+1.  **Client Setup**: Always start with `mw_rest_client()`, enable
+    caching for better performance
+2.  **Study Discovery**: Use `get_study_summary()` and
+    `search_metstat()` to find relevant studies
+3.  **Data Retrieval**: Get detailed study information with
+    study-specific functions
+4.  **Compound Analysis**: Use compound functions and mass spectrometry
+    tools for molecular identification
+5.  **Name Standardization**: Leverage RefMet for consistent metabolite
+    naming
+6.  **Best Practices**: Implement error handling, use caching, and
+    consider rate limiting
+
+For more information, see the function documentation (`?function_name`)
+and visit the [Metabolomics Workbench
+website](https://www.metabolomicsworkbench.org/).

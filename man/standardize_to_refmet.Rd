@@ -7,13 +7,24 @@
 standardize_to_refmet(client, name)
 }
 \arguments{
-\item{client}{mwREST client}
+\item{client}{An mw_rest_client object}
 
-\item{name}{Metabolite name to standardize}
+\item{name}{Character. Metabolite name to standardize}
 }
 \value{
-Standardized RefMet name
+Tibble containing the standardized RefMet name
 }
 \description{
-Standardize metabolite name to RefMet
+Convert a metabolite name to its standardized RefMet equivalent.
+Useful for name harmonization across datasets.
+}
+\examples{
+\dontrun{
+client <- mw_rest_client()
+
+# Standardize a metabolite name
+standardized <- standardize_to_refmet(client, "glucose")
+print(standardized$refmet_name)
+}
+
 }

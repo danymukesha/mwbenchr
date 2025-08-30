@@ -2,18 +2,25 @@
 % Please edit documentation in R/study.R
 \name{get_study_metabolites}
 \alias{get_study_metabolites}
-\title{Get study metabolites}
+\title{Get study metabolite list}
 \usage{
 get_study_metabolites(client, study_id)
 }
 \arguments{
-\item{client}{mwREST client}
+\item{client}{An mw_rest_client object}
 
-\item{study_id}{Study ID}
+\item{study_id}{Character. Study ID}
 }
 \value{
-Metabolites in study
+Tibble containing metabolite information
 }
 \description{
-Get study metabolites
+Retrieve the list of metabolites measured in a specific study.
+}
+\examples{
+\dontrun{
+client <- mw_rest_client()
+metabolites <- get_study_metabolites(client, "ST000001")
+}
+
 }

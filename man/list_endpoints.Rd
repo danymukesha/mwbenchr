@@ -2,16 +2,24 @@
 % Please edit documentation in R/utils.R
 \name{list_endpoints}
 \alias{list_endpoints}
-\title{Print available endpoints}
+\title{List available API endpoints}
 \usage{
 list_endpoints(client)
 }
 \arguments{
-\item{client}{mwREST client}
+\item{client}{An mw_rest_client object (used for method dispatch)}
 }
 \value{
-Information about available endpoints
+Invisibly returns NULL (called for side effects)
 }
 \description{
-Print available endpoints
+Display information about available endpoints in the mwbenchr package
+organized by functional category.
+}
+\examples{
+\dontrun{
+client <- mw_rest_client()
+list_endpoints(client)
+}
+
 }

@@ -4,23 +4,24 @@
 \alias{mw_request}
 \title{Make a request to the Metabolomics Workbench REST API}
 \usage{
-mw_request(client, endpoint, parse = TRUE, format = "json", ...)
+mw_request(client, endpoint, parse = TRUE, format = NULL, ...)
 }
 \arguments{
-\item{client}{mwREST client object}
+\item{client}{An mw_rest_client object}
 
-\item{endpoint}{API endpoint path (e.g., "compound/regno/11/name")}
+\item{endpoint}{Character. API endpoint path}
 
-\item{parse}{Should the response be parsed? (TRUE/FALSE)}
+\item{parse}{Logical. Should the response be parsed? (default: TRUE)}
 
-\item{format}{Output format ("json" or "txt")}
+\item{format}{Character. Output format ("json" or "txt")}
 
 \item{...}{Additional parameters passed to httr2::req_perform}
 }
 \value{
-API response
+Parsed API response (list for JSON, character for text)
 }
 \description{
-Make a request to the Metabolomics Workbench REST API
+Internal function to handle HTTP requests to the API with error handling
+and response parsing.
 }
 \keyword{internal}

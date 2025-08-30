@@ -2,21 +2,27 @@
 % Please edit documentation in R/utils.R
 \name{response_to_df}
 \alias{response_to_df}
-\title{Convert mwbenchr API response into a clean data frame}
+\title{Convert Response to Data Frame}
 \usage{
 response_to_df(response)
 }
 \arguments{
-\item{response}{A parsed response from mwbenchr}
+\item{response}{A list that can be in various forms:
+\itemize{
+\item Flat named list (single record)
+\item Search results with rows (e.g., \code{Row1}, \code{Row2})
+\item Metabolite entries with \code{DATA} elements (e.g., measurement data)
+}}
 }
 \value{
-A tibble
+A \code{tibble} with the processed data, where each element is converted
+into a column.
+If \code{DATA} columns are \code{NULL}, they are replaced with \code{NA}.
 }
 \description{
-Handles responses like:
-}
-\details{
-- Flat named list (e.g. compound, study)
-- Named list of rows (e.g. search results from search_metstat)
-- List of metabolite entries (with nested DATA)
+This function converts a complex list-based response (from an API or
+other source)
+into a \code{tibble}. It handles different types of list structures, including
+flat responses,
+search results (with rows), and metabolite entries with \code{DATA} values.
 }

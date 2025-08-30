@@ -2,20 +2,33 @@
 % Please edit documentation in R/study.R
 \name{get_study_summary}
 \alias{get_study_summary}
-\title{Get study summary}
+\title{Get study summary information}
 \usage{
 get_study_summary(client, study_id = "ST", format = "json")
 }
 \arguments{
-\item{client}{mwREST client}
+\item{client}{An mw_rest_client object}
 
-\item{study_id}{Study ID (use "ST" for all studies)}
+\item{study_id}{Character. Study ID (use "ST" for all studies)}
 
-\item{format}{Output format ("json" or "txt")}
+\item{format}{Character. Output format ("json" or "txt")}
 }
 \value{
-Study summary
+Study summary data as tibble (JSON) or character string (txt)
 }
 \description{
-Get study summary
+Retrieve summary information for one or all studies in the Metabolomics
+Workbench database.
+}
+\examples{
+\dontrun{
+client <- mw_rest_client()
+
+# Get all studies
+all_studies <- get_study_summary(client)
+
+# Get specific study
+study_info <- get_study_summary(client, study_id = "ST000001")
+}
+
 }

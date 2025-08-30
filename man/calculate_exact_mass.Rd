@@ -2,20 +2,43 @@
 % Please edit documentation in R/moverz.R
 \name{calculate_exact_mass}
 \alias{calculate_exact_mass}
-\title{Calculate exact mass}
+\title{Calculate exact mass for lipid}
 \usage{
 calculate_exact_mass(client, lipid_abbrev, ion_type)
 }
 \arguments{
-\item{client}{mwREST client}
+\item{client}{An mw_rest_client object}
 
-\item{lipid_abbrev}{Lipid abbreviation (e.g., "PC(34:1)")}
+\item{lipid_abbrev}{A character string representing the lipid abbreviation
+(e.g., "PC(34:1)", , "PE(36:2)").}
 
-\item{ion_type}{Ion type (e.g., "M+H")}
+\item{ion_type}{A character string representing the ion type
+(e.g., "M+H", "M-H", "M+Na").}
 }
 \value{
-Exact mass
+A \code{tibble} containing the parsed data, with calculated exact mass:
+\describe{
+\item{lipid_abbrev}{The lipid abbreviation (e.g., "PC(34:1)")}
+\item{ion_type}{The ion type (e.g., "M+H+")}
+\item{lipid_name}{The full lipid name (e.g., "PC 34:1")}
+\item{ion_type_parsed}{The parsed ion type (e.g., "M+H+")}
+\item{mz}{The m/z value (numeric, e.g., 760.585077)}
+\item{formula}{The molecular formula (e.g., "C42H83NO8P")}
+}
 }
 \description{
-Calculate exact mass
+Calculate the exact mass for a lipid given its abbreviation and ion type.
+}
+\examples{
+\dontrun{
+client <- mw_rest_client()
+
+# Calculate exact mass for phosphatidylcholine
+mass_info <- calculate_exact_mass(client, "PC(34:1)", "M+H")
+print(mass_info$exactmass)
+
+# Calculate for different ion types
+mass_na <- calculate_exact_mass(client, "PC(34:1)", "M+Na")
+}
+
 }

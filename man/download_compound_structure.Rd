@@ -4,20 +4,42 @@
 \alias{download_compound_structure}
 \title{Download compound structure file}
 \usage{
-download_compound_structure(client, id_type, id_value, format = "molfile")
+download_compound_structure(
+  client,
+  id_type,
+  id_value,
+  format = "molfile",
+  save_path = NULL
+)
 }
 \arguments{
-\item{client}{mwREST client}
+\item{client}{An mw_rest_client object}
 
-\item{id_type}{Identifier type ("regno", "pubchem_cid", etc.)}
+\item{id_type}{Character. Identifier type ("regno", "pubchem_cid", etc.)}
 
-\item{id_value}{Identifier value}
+\item{id_value}{Character or numeric. Identifier value}
 
-\item{format}{File format ("molfile" or "sdf")}
+\item{format}{Character. File format ("molfile", "sdf" or "png")}
+
+\item{save_path}{Character. Path to save the downloaded file.
+If NULL, content is returned as a character string.}
 }
 \value{
-File content
+Character string containing the structure file content
+or NULL if saved to a file
 }
 \description{
-Download compound structure file
+Download molecular structure files in various formats (MOL, SDF, PNG).
+}
+\examples{
+\dontrun{
+client <- mw_rest_client()
+mol_file <- download_compound_structure(
+    client, "regno", "1", "molfile",
+    "compound.mol"
+)
+
+# Save to file
+}
+
 }

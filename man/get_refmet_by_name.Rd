@@ -7,15 +7,23 @@
 get_refmet_by_name(client, name, fields = "all")
 }
 \arguments{
-\item{client}{mwREST client}
+\item{client}{An mw_rest_client object}
 
-\item{name}{RefMet name}
+\item{name}{Character. RefMet metabolite name}
 
-\item{fields}{Fields to return (default: "all")}
+\item{fields}{Character. Fields to return (default: "all")}
 }
 \value{
-RefMet information
+Tibble containing RefMet information
 }
 \description{
-Get RefMet information by name
+Retrieve RefMet (Reference list of Metabolite names) information
+for a specific metabolite name.
+}
+\examples{
+\dontrun{
+client <- mw_rest_client()
+refmet_info <- get_refmet_by_name(client, "Cholesterol")
+}
+
 }
