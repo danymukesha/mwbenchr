@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>introduction • mwbenchr</title>
+<title>Hands-On mwbenchr • mwbenchr</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="introduction">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Hands-On mwbenchr">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -29,18 +29,21 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
+<li class="nav-item"><a class="nav-link" href="../articles/mwbenchr.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/introduction.html">introduction</a></li>
+<li><a class="dropdown-item" href="../articles/introduction.html">Hands-On mwbenchr</a></li>
   </ul>
 </li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
 </form></li>
+<li class="nav-item"><a class="nav-link" href="https://github.com/danymukesha/mwbenchr/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
@@ -53,78 +56,56 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>introduction</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>Hands-On mwbenchr</h1>
             
       
-
+      <small class="dont-index">Source: <a href="https://github.com/danymukesha/mwbenchr/blob/main/vignettes/introduction.Rmd"><code>vignettes/introduction.Rmd</code></a></small>
       <div class="d-none name"><code>introduction.Rmd</code></div>
     </div>
 
     
     
+<p>This short guide provides a quick overview of the core functions to
+use the <code>mwbenchr</code> package to interact with mass spectrometry
+and study data. For a complete tutorial, refer to the <strong>Getting
+Started</strong> section of the documentation.</p>
+<p>First, load the <code>mwbenchr</code> package:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">mwbenchr</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/danymukesha/mwbenchr">mwbenchr</a></span><span class="op">)</span></span></code></pre></div>
+<p>Create a client to interact with the API:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">client</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mw_rest_client.html">mw_rest_client</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>Fetch compound information by providing its PubChem CID. Here, we use
+CID <code>5281365</code> as an example:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">compound</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_compound_by_pubchem_cid.html">get_compound_by_pubchem_cid</a></span><span class="op">(</span><span class="va">client</span>, <span class="fl">5281365</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">compound</span><span class="op">)</span></span>
-<span><span class="co">#&gt; $pubchem_cid</span></span>
-<span><span class="co">#&gt; [1] "5281365"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $regno</span></span>
-<span><span class="co">#&gt; [1] "28467"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $formula</span></span>
-<span><span class="co">#&gt; [1] "C20H34O"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $exactmass</span></span>
-<span><span class="co">#&gt; [1] "290.260966"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $inchi_key</span></span>
-<span><span class="co">#&gt; [1] "OJISWRZIEWCUBN-QIRCYJPOSA-N"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $name</span></span>
-<span><span class="co">#&gt; [1] "Geranylgeraniol"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $sys_name</span></span>
-<span><span class="co">#&gt; [1] "3,7,11,15-tetramethylhexadeca-2E,6E,10E,14-tetraen-1-ol"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $lm_id</span></span>
-<span><span class="co">#&gt; [1] "LMPR0104010009"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $kegg_id</span></span>
-<span><span class="co">#&gt; [1] "C09094"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $chebi_id</span></span>
-<span><span class="co">#&gt; [1] "46762"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $metacyc_id</span></span>
-<span><span class="co">#&gt; [1] "CPD-9087"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $smiles</span></span>
-<span><span class="co">#&gt; [1] "CC(=CCC/C(=C/CC/C(=C/CC/C(=C/CO)/C)/C)/C)C"</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 12</span></span></span>
+<span><span class="co">#&gt;   pubchem_cid regno formula exactmass  inchi_key    name  sys_name lm_id kegg_id</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 5281365     28467 C20H34O 290.260966 OJISWRZIEWC… Gera… 3,7,11,… LMPR… C09094 </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 3 more variables: chebi_id &lt;chr&gt;, metacyc_id &lt;chr&gt;, smiles &lt;chr&gt;</span></span></span></code></pre></div>
+<p>Retrieve data from a study by providing its study ID (e.g.,
+<code>"ST000001"</code>). Convert the response into a data frame:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">study_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_study_data.html">get_study_data</a></span><span class="op">(</span><span class="va">client</span>, <span class="st">"ST000001"</span><span class="op">)</span></span>
 <span><span class="va">study_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/response_to_df.html">response_to_df</a></span><span class="op">(</span><span class="va">study_data</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">study_df</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 31</span></span></span>
-<span><span class="co">#&gt;   study_id analysis_id analysis_summary       metabolite_name      metabolite_id</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> ST000001 AN000001    GCMS positive ion mode 1,2,4-benzenetriol   ME000097     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> ST000001 AN000001    GCMS positive ion mode 1-monostearin        ME000096     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> ST000001 AN000001    GCMS positive ion mode 2-hydroxyvaleric ac… ME000098     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> ST000001 AN000001    GCMS positive ion mode 3-phosphoglycerate   ME000095     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> ST000001 AN000001    GCMS positive ion mode 5-hydroxynorvaline … ME001834     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> ST000001 AN000001    GCMS positive ion mode adenosine            ME000092     </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 26 more variables: refmet_name &lt;chr&gt;, units &lt;chr&gt;, LabF_115811 &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   LabF_115816 &lt;chr&gt;, LabF_115821 &lt;chr&gt;, LabF_115826 &lt;chr&gt;, LabF_115831 &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   LabF_115836 &lt;chr&gt;, LabF_115842 &lt;chr&gt;, LabF_115847 &lt;chr&gt;, LabF_115852 &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   LabF_115857 &lt;chr&gt;, LabF_115862 &lt;chr&gt;, LabF_115867 &lt;chr&gt;, LabF_115873 &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   LabF_115878 &lt;chr&gt;, LabF_115883 &lt;chr&gt;, LabF_115888 &lt;chr&gt;, LabF_115893 &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   LabF_115898 &lt;chr&gt;, LabF_115904 &lt;chr&gt;, LabF_115909 &lt;chr&gt;, LabF_115914 &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   LabF_115919 &lt;chr&gt;, LabF_115924 &lt;chr&gt;, LabF_115929 &lt;chr&gt;</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 8</span></span></span>
+<span><span class="co">#&gt;   study_id analysis_id analysis_summary       metabolite_name    metabolite_id</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> ST000001 AN000001    GCMS positive ion mode 1,2,4-benzenetriol ME000097     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> ST000001 AN000001    GCMS positive ion mode 1,2,4-benzenetriol ME000097     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> ST000001 AN000001    GCMS positive ion mode 1,2,4-benzenetriol ME000097     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> ST000001 AN000001    GCMS positive ion mode 1,2,4-benzenetriol ME000097     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> ST000001 AN000001    GCMS positive ion mode 1,2,4-benzenetriol ME000097     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> ST000001 AN000001    GCMS positive ion mode 1,2,4-benzenetriol ME000097     </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 3 more variables: refmet_name &lt;chr&gt;, units &lt;chr&gt;, DATA &lt;named list&gt;</span></span></span></code></pre></div>
+<p>If you want to search for compounds based on their mass
+(optional):</p>
+<p>Search for studies related to <strong>Diabetes</strong> in
+<strong>Human</strong> blood samples. The result is returned as a data
+frame:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">diabetes_studies</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/search_metstat.html">search_metstat</a></span><span class="op">(</span></span>
 <span>  <span class="va">client</span>,</span>
@@ -132,18 +113,29 @@
 <span>  sample_source <span class="op">=</span> <span class="st">"Blood"</span>,</span>
 <span>  disease <span class="op">=</span> <span class="st">"Diabetes"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
+<p>Convert the result to a data frame and view:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">diabetes_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/response_to_df.html">response_to_df</a></span><span class="op">(</span><span class="va">diabetes_studies</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">diabetes_df</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 6</span></span></span>
-<span><span class="co">#&gt;   row   study    study_title                              species source disease</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Row1  ST003671 Discovery of Metabolic Biomarkers for G… Human   Blood  Diabet…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Row2  ST003390 In-depth profiling of biosignatures for… Human   Blood  Diabet…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Row3  ST002681 Non-T2D vs T2D                           Human   Blood  Diabet…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Row4  ST002496 Study of environmental toxicants and gu… Human   Blood  Diabet…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Row5  ST001991 Dynamics of bile acid metabolism betwee… Human   Blood  Diabet…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Row6  ST001948 Metabolites Associated with Gestational… Human   Blood  Diabet…</span></span></code></pre></div>
+<span><span class="co">#&gt;   row_id study    study_title                             species source disease</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Row1   ST003897 Postprandial Plasma Lipidomic Changes … Human   Blood  Diabet…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Row2   ST003896 Postprandial Plasma Metabolomic Change… Human   Blood  Diabet…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Row3   ST003895 Postprandial Plasma Metabolomic Change… Human   Blood  Diabet…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Row4   ST003894 Postprandial Plasma Lipidomic Changes … Human   Blood  Diabet…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Row5   ST003671 Discovery of Metabolic Biomarkers for … Human   Blood  Diabet…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Row6   ST003636 Individual glycemic responses to carbo… Human   Blood  Diabet…</span></span></code></pre></div>
+<hr>
+<p>Here, we covered just fundamental implemented methods in the
+<code>mwbenchr</code> package, including how to interact with compound
+and study data, as well as how to search for mass spectrometry-related
+compounds and studies.</p>
+<p>For more detailed examples and additional functions, please refer to
+the Getting Started section in the vignette, which covers the full
+tutorial.For more detailed examples and additional functions, please
+refer to the <strong>Getting Started</strong> of the package, which
+covers the full tutorial.</p>
   </main>
 </div>
 
