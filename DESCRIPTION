@@ -4,8 +4,9 @@ Title: R Interface to Metabolomics Workbench REST API
 Version: 0.0.1
 Date: 2025-08-29
 Authors@R: 
-    person("Dany", "Mukesha", , "danymukesha@gmail.com", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0000-0000-0000"))
+    person("Dany", "Mukesha", , "danymukesha@gmail.com", 
+        role = c("aut", "cre"), comment = c(ORCID = "0000-0000-0000-0000"))
+Maintainer: Dany Mukesha <danymukesha@gmail.com>
 Description: Provides a comprehensive R interface to the Metabolomics
     Workbench REST API (v1.2). The package enables programmatic access to
     metabolomics data, compound information, study metadata, and
@@ -27,7 +28,8 @@ Imports:
     purrr (>= 1.0.0),
     tibble (>= 3.2.0),
     utils,
-    vroom
+    vroom,
+    sessioninfo
 Suggests:
     BiocStyle,
     covr,

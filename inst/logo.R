@@ -3,7 +3,7 @@ imgurl <- "man/figures/metabolomics.png"
 sticker(
     imgurl,
     package = "mwbenchr",
-    p_size = 14,
+    p_size = 17,
     s_x = 1,
     s_y = 0.885,
     s_width = .586,

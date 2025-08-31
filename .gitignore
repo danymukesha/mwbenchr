@@ -4,3 +4,4 @@ docs
 mwbenchr.Rproj
 .Rbuildignore
 *html
+*Rmd
