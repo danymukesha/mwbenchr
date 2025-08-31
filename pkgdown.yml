@@ -2,9 +2,10 @@ pandoc: 3.1.11
 pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
+  api_schema: api_schema.html
   introduction: introduction.html
   mwbenchr: mwbenchr.html
-last_built: 2025-08-30T23:21Z
+last_built: 2025-08-31T00:28Z
 urls:
   reference: https://danymukesha.github.io/mwbenchr/reference
   article: https://danymukesha.github.io/mwbenchr/articles
