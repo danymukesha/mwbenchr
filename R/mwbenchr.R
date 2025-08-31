@@ -24,6 +24,7 @@
 #' @importFrom tibble tibble as_tibble
 #' @importFrom methods is
 #' @importFrom utils URLencode
+#' @importFrom sessioninfo session_info
 #' @import ggplot2
 #' @name mwbenchr
 #' @aliases mwbenchr

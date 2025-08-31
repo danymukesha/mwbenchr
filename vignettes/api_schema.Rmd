@@ -106,7 +106,7 @@ get_study_summary(
 **Returns**: 
 - **JSON format**: Tibble with columns:
 
-  ```r
+  ```
   ├── study_id          : Character
   ├── study_title       : Character  
   ├── study_type        : Character
@@ -165,7 +165,7 @@ get_study_metabolites(
 
 **Returns**: Tibble with metabolite information
 
-``` r
+```
 ├── metabolite_id     : Character
 ├── metabolite_name   : Character
 ├── refmet_name       : Character
@@ -193,7 +193,7 @@ get_study_data(
 
 **Returns**: Tibble with metabolite data across samples
 
-``` r
+```
 ├── study_id          : Character
 ├── analysis_id       : Character
 ├── analysis_summary  : Character
@@ -230,7 +230,7 @@ get_compound_by_regno(
 
 **Returns**: Tibble with compound information
 
-``` r
+```
 ├── regno             : Character
 ├── name              : Character
 ├── systematic_name   : Character
@@ -279,7 +279,7 @@ get_compound_classification(
 
 **Returns**: Tibble with classification hierarchy
 
-``` r
+```
 ├── kingdom           : Character
 ├── super_class       : Character
 ├── class            : Character
@@ -332,7 +332,7 @@ get_refmet_by_name(
 
 **Returns**: Tibble with RefMet information
 
-``` r
+```
 ├── refmet_name       : Character
 ├── formula           : Character
 ├── exactmass         : Numeric
@@ -361,7 +361,7 @@ standardize_to_refmet(
 
 **Returns**: Tibble with standardization result
 
-``` r
+```
 ├── input_name        : Character
 ├── refmet_name       : Character
 ├── formula           : Character
@@ -385,7 +385,7 @@ get_all_refmet_names(
 
 **Returns**: Tibble with all RefMet names
 
-``` r
+```
 ├── refmet_name       : Character
 ├── pubchem_cid       : Character
 ├── exactmass         : Numeric
@@ -421,7 +421,7 @@ search_metstat(
 
 **Returns**: Tibble with matching studies
 
-``` r
+```
 ├── study_id          : Character
 ├── analysis_id       : Character
 ├── metabolite_name   : Character
@@ -457,7 +457,7 @@ search_by_mass(
 
 **Returns**: Tibble with matching compounds
 
-``` r
+```
 ├── refmet_name       : Character
 ├── formula           : Character
 ├── exactmass         : Numeric
@@ -734,6 +734,16 @@ outputs can be easily converted:
 study_data <- get_study_data(client, "ST000001")
 # ... conversion code would go here
 ```
+
+<details>
+
+<summary>**Session Info**</summary>
+
+```{r sessioninfo}
+sessioninfo::session_info()
+```
+
+</details>
 
 This schema provides the complete technical specification for all
 mwbenchr functions and their interaction with the Metabolomics Workbench
