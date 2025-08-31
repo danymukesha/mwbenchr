@@ -20,6 +20,8 @@ navbar:
       menu:
         - text: "Hands-On mwbenchr"
           href: articles/introduction.html
+        - text: "API Schema Documentation"
+          href: articles/api_schema.html
     news:
       text: "Changelog"
       href: news/index.html
@@ -75,6 +77,7 @@ articles:
   - title: "Hands-On mwbenchr"
     contents:
       - introduction
+      - api_schema
 
 news:
   one_page: true

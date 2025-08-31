@@ -1,0 +1,19 @@
+graph TD
+    A[mw_rest_client] --> B[API Request Functions]
+    B --> C[mw_request - Internal]
+    C --> D[httr2::request]
+    D --> E[REST API Response]
+    E --> F[Response Parsing]
+    F --> G[response_to_df]
+    G --> H[Tibble Output]
+
+    I[Raw Response] --> J{Response Type?}
+    J -->|Flat List| K[as_tibble]
+    J -->|Row Pattern| L[list_rbind with row_id]
+    J -->|DATA Nested| M[flatten_entry]
+    J -->|List of Lists| N[map + list_rbind]
+
+    K --> H
+    L --> H
+    M --> H
+    N --> H

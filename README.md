@@ -112,7 +112,7 @@ head(diabetes_studies)
 | **RefMet** | `get_refmet_by_name()`, `standardize_to_refmet()`, `get_all_refmet_names()` | Work with standardized metabolite names |
 | **Search** | `search_metstat()`, `search_by_mass()` | Find studies and compounds |
 | **Mass Spec** | `calculate_exact_mass()` | Calculate exact masses for lipids |
-| **Utilities** | `response_to_df()`, `list_endpoints()`, `download_compound_structure`, `flatten_entry`, `mwbenchr`, `parse_mw_output`, `rint.mw_rest_client` | Data processing and help |
+| **Utilities** | `response_to_df()`, `list_endpoints()`, `download_compound_structure()`, `flatten_entry()`, `mwbenchr()`, `parse_mw_output()`, `rint.mw_rest_client()` | Data processing and help |
 
 ## Advanced Usage
 
