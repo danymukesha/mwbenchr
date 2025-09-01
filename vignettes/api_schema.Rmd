@@ -18,7 +18,7 @@ This document provides a complete schema of all `mwbenchr` functions,
 their parameters, return types, and the underlying REST API endpoints
 they access.
 
-![](../man/figures/api_overview.png)
+![API overview](../man/figures/api_overview.png)
 
 ## Function Categories
 
@@ -643,7 +643,7 @@ Valid values: "HILIC", "RP", "GC", "Ion-pair", "RPLC", "Normal phase"
 
 ## Data Flow Schema
 
-![](../man/figures/data_flow_schema.png)
+![Data flow schema](../man/figures/data_flow_schema.png)
 
 ------------------------------------------------------------------------
 
